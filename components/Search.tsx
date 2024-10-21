@@ -1,20 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { searchStyles } from '../styles/appStyles';
 
 const Search = () => {
-    return (
-        <View style={styles.container}>
-          <Text>This is the search tab!</Text>
-        </View>
-      );
+  return (
+    <View style={searchStyles.container}>
+      <Text style={searchStyles.text}>This is the search tab!</Text>
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-
-  export default Search
+export default Search

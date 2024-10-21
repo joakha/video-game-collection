@@ -4,9 +4,10 @@ import Search from './components/Search';
 import Collection from './components/Collection';
 import Statistics from './components/Statistics';
 
-const appTabs = createBottomTabNavigator();
-
 const App = () => {
+
+  const appTabs = createBottomTabNavigator();
+
   return (
     <NavigationContainer>
       <appTabs.Navigator>

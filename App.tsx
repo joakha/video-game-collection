@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Search from './components/Search';
-import Collection from './components/Collection';
-import Statistics from './components/Statistics';
+import SearchPage from './components/main-pages/SearchPage';
+import CollectionPage from './components/main-pages/CollectionPage';
+import StatisticsPage from './components/main-pages/StatisticsPage';
 
 const App = () => {
 
@@ -11,9 +11,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <appTabs.Navigator>
-        <appTabs.Screen name="Search" component={Search} />
-        <appTabs.Screen name="Collection" component={Collection} />
-        <appTabs.Screen name="Statistics" component={Statistics} />
+        <appTabs.Screen name="Search" component={SearchPage} />
+        <appTabs.Screen name="Collection" component={CollectionPage} />
+        <appTabs.Screen name="Statistics" component={StatisticsPage} />
       </appTabs.Navigator>
     </NavigationContainer>
   );

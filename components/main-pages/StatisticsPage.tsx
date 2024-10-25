@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
-import { statisticsStyles } from '../styles/appStyles';
+import { statisticsStyles } from '../../styles/AppStyles';
 
-const Statistics = () => {
+const StatisticsPage = () => {
   return (
     <View style={statisticsStyles.container}>
       <Text>This is the statistics tab!</Text>
@@ -9,4 +9,4 @@ const Statistics = () => {
   );
 }
 
-export default Statistics
+export default StatisticsPage

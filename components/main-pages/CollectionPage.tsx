@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
-import { collectionStyles } from '../styles/appStyles';
+import { collectionStyles } from '../../styles/AppStyles';
 
-const Collection = () => {
+const CollectionPage = () => {
   return (
     <View style={collectionStyles.container}>
       <Text>This is the collection tab!</Text>
@@ -9,4 +9,4 @@ const Collection = () => {
   );
 }
 
-export default Collection
+export default CollectionPage

@@ -3,16 +3,43 @@ import { StyleSheet } from "react-native";
 //styles for search tab
 
 export const searchStyles = StyleSheet.create({
-  container: {
+  body: {
     flex: 1,
-    fontSize: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'gray',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "space-between",
+  },
+  inputView: {
+    marginBottom: 15,
+    marginTop: 15,
+    alignItems: "center",
+  },
+  flatlistView: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  gameCard: {
+    width: 320,
+    height: 375,
+    marginBottom: 10
   },
   text: {
-    fontSize: 65
+    fontSize: 20,
+    color: "white",
   },
+  searchbar: {
+    backgroundColor: "#77dd77",
+    width: 300,
+  },
+  searchbarInput: {
+    color: "white"
+  },
+  button: {
+    marginTop: 20,
+    padding: 5
+  }
 });
 
 //styles for collection tab

@@ -3,19 +3,15 @@
 export interface PlatformObject {
     id: number,
     name: string,
-    slug: string
+    slug: string,
 }
 
 export interface PlatformEntity {
-    platform: PlatformObject
-}
-
-export interface Platforms {
-    platforms: PlatformEntity[]
+    platform: PlatformObject,
 }
 
 export interface ParentPlatforms {
-    parent_platforms: PlatformEntity[]
+    parent_platforms: PlatformEntity[],
 }
 
 //interfaces for handling api stores
@@ -23,23 +19,23 @@ export interface ParentPlatforms {
 export interface StoreObject {
     id: number,
     name: string,
-    slug: string
+    slug: string,
 }
 
 export interface StoreEntity {
-    store: StoreObject
+    store: StoreObject,
 }
 
 export interface Stores {
-    stores: StoreEntity[]
+    stores: StoreEntity[],
 }
 
-//other types for api
+//other interfaces for api
 
 export interface Genre {
     id: number,
     name: string,
-    slug: string
+    slug: string,
 }
 
 export interface Tag {
@@ -48,12 +44,13 @@ export interface Tag {
     slug: string,
     language: string,
     games_count: number,
-    image_background: string
+    image_background: string,
 }
 
-//types for GameCard
+//interfaces for GameCard
 
 export interface GameCardEntity {
+    id: string,
     name: string | null,
     platforms: Platforms | null,
     stores: Stores | null,
@@ -61,11 +58,34 @@ export interface GameCardEntity {
     background_image: string | null,
     rating: number | null,
     metacritic: string | null,
-    tags: Tag[] | null
-    parent_platforms: ParentPlatforms | null
-    genres: Genre[] | null
+    tags: Tag[] | null,
+    parent_platforms: ParentPlatforms | null,
+    genres: Genre[] | null,
 }
 
 export interface GameCardProps {
-    game: GameCardEntity
+    game: GameCardEntity,
+    navigation: any
+}
+
+//interfaces for Details Page
+
+export interface Platforms {
+    platforms: PlatformEntity[],
+}
+
+export interface DetailEntity {
+    name: string,
+    metacritic?: string,
+    released?: string,
+    backgroundImage?: string,
+    backgroundImageAdditional?: string,
+    parentPlatforms?: string,
+    platforms?: string,
+    stores?: string,
+    developers?: string,
+    genres?: string,
+    tags?: string,
+    publishers?: string,
+    descriptionRaw?: string,
 }

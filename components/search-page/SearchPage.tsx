@@ -1,14 +1,12 @@
 import { Text, View, FlatList } from 'react-native';
-import { searchStyles } from '../../styles/AppStyles';
+import { searchPageStyles, searchbarStyles, searchButtonStyles } from '../../styles/AppStyles';
 import { useState } from 'react';
 import { Searchbar, Button } from 'react-native-paper';
-import { apiURL } from '../../constants/constants';
+import { apiURL, apiKey } from '../../constants/constants';
 import { GameCardEntity } from '../../interfaces/interfaces';
-import GameCard from '../GameCard';
+import GameCard from './GameCard';
 
-const SearchPage = () => {
-
-  const apiKey = process.env.EXPO_PUBLIC_API_KEY;
+const SearchPage = ({ navigation }) => {
 
   const [gameKeyword, setGameKeyword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,7 +15,7 @@ const SearchPage = () => {
   const fetchGames = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${apiURL}games?key=${apiKey}&search=${gameKeyword.replaceAll(/ /g, "-")}&search_exact=true&ordering=-rating`);
+      const response = await fetch(`${apiURL}/games?key=${apiKey}&search=${gameKeyword.replaceAll(/ /g, "-")}&search_exact=true&ordering=-rating`);
       if (!response.ok) throw new Error("Issue fetching game(s) data!")
       const gamesData = await response.json();
       const formattedData: GameCardEntity[] = [];
@@ -25,6 +23,7 @@ const SearchPage = () => {
       if (gamesData.results) (
         gamesData.results.forEach((game) => {
           const formattedGame: GameCardEntity = {
+            id: game.id,
             name: game.name,
             platforms: game.platforms,
             stores: game.stores,
@@ -51,48 +50,48 @@ const SearchPage = () => {
 
   const ListEmptyComponent = () => {
     return (
-      <Text style={searchStyles.text}>
+      <Text style={searchPageStyles.text}>
         No games to show... Yet!
       </Text>
     )
   }
 
   return (
-    <View style={searchStyles.body}>
+    <View style={searchPageStyles.body}>
 
-      <View style={searchStyles.flatlistView}>
+      <View style={searchPageStyles.flatlistView}>
         {
           loading ?
-            <Text style={searchStyles.text}>Loading...</Text> :
+            <Text style={searchPageStyles.text}>Loading...</Text> :
             <FlatList
               data={searchGames}
               ListEmptyComponent={ListEmptyComponent}
               renderItem={({ item }) => {
                 return (
-                  <GameCard game={item} />
+                  <GameCard game={item} navigation={navigation} />
                 )
               }}
             />
         }
       </View>
 
-      <View style={searchStyles.inputView}>
+      <View style={searchPageStyles.inputView}>
         <Searchbar
           placeholder="Type a game title"
           onChangeText={setGameKeyword}
           value={gameKeyword}
-          style={searchStyles.searchbar}
-          inputStyle={searchStyles.searchbarInput}
-          placeholderTextColor="white"
-          selectionColor="white"
-          iconColor='white'
-          icon="gamepad-variant"
+          style={searchbarStyles.style}
+          inputStyle={searchbarStyles.inputStyle}
+          placeholderTextColor={searchbarStyles.placeholderTextColor}
+          selectionColor={searchbarStyles.selectionColor}
+          iconColor={searchbarStyles.iconColor}
+          icon={searchbarStyles.icon}
         />
         <Button
-          icon="search-web"
-          buttonColor='#77dd77'
-          style={searchStyles.button}
-          textColor='white'
+          icon={searchButtonStyles.icon}
+          buttonColor={searchButtonStyles.buttonColor}
+          style={searchButtonStyles.style}
+          textColor={searchButtonStyles.textColor}
           onPress={fetchGames}
         >
           Search games

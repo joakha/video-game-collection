@@ -1,8 +1,8 @@
 import { Card, Text, Button } from 'react-native-paper';
-import { GameCardProps } from '../interfaces/interfaces';
-import { searchStyles } from '../styles/AppStyles';
+import { GameCardProps } from '../../interfaces/interfaces';
+import { searchPageStyles } from '../../styles/AppStyles';
 
-const GameCard = ({ game }: GameCardProps) => {
+const GameCard = ({ game, navigation }: GameCardProps) => {
 
     const titleString = game.name ? game.name : "Title not found!";
     const releaseYearString = game.released ? game.released.split("-")[0] : "Release year not found!";
@@ -10,7 +10,7 @@ const GameCard = ({ game }: GameCardProps) => {
     const mainPlatformString = game.parent_platforms ? game.parent_platforms[0].platform.name : "Main platform not found!";
 
     return (
-        <Card style={searchStyles.gameCard}>
+        <Card style={searchPageStyles.gameCard}>
             {
                 game.background_image ?
                     <Card.Cover source={{ uri: game.background_image }} /> :
@@ -25,7 +25,7 @@ const GameCard = ({ game }: GameCardProps) => {
                 <Text variant="bodyMedium">{mainPlatformString}</Text>
             </Card.Content>
             <Card.Actions>
-                <Button>Show More</Button>
+                <Button onPress={() => navigation.navigate("Game Details", {gameId: game.id})}>Show More</Button>
             </Card.Actions>
         </Card>
     )

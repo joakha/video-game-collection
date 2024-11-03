@@ -1,21 +1,21 @@
 import { Card, Text, Button } from 'react-native-paper';
-import { GameCardProps } from '../../interfaces/interfaces';
 import { searchPageStyles } from '../../styles/SearchPageStyles';
 import { firebaseApp } from '../../firebase/firebaseConfig';
-import { getDatabase, ref, push } from "firebase/database";
+import { getDatabase, ref, remove } from "firebase/database";
+import { CollectionCardProps } from '../../interfaces/interfaces';
 
-const GameCard = ({ game, navigation }: GameCardProps) => {
+const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
 
     const database = getDatabase(firebaseApp);
+
+    const removeGame = (firebaseId: string) => {
+        remove(ref(database, `myGames/${firebaseId}`));
+    }   
 
     const titleString = game.name ? game.name : "Title not found!";
     const releaseYearString = game.released ? game.released.split("-")[0] : "Release year not found!";
     const genreString = game.genres ? game.genres.map(genre => genre.name).join(", ") : "Genre(s) not found!";
     const mainPlatformString = game.parent_platforms ? game.parent_platforms[0].platform.name : "Main platform not found!";
-
-    const addToCollection = () => {
-        push(ref(database, 'myGames/'), game);
-    }
 
     return (
         <Card style={searchPageStyles.gameCard}>
@@ -33,11 +33,11 @@ const GameCard = ({ game, navigation }: GameCardProps) => {
                 <Text variant="bodyMedium">{mainPlatformString}</Text>
             </Card.Content>
             <Card.Actions>
-                <Button onPress={addToCollection}>Add to Collection</Button>
+                <Button onPress={() => removeGame(game.firebaseId)}>Remove from Collection</Button>
                 <Button onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}>Details</Button>
             </Card.Actions>
         </Card>
     )
 }
 
-export default GameCard
+export default CollectionCard

@@ -50,7 +50,7 @@ export interface Tag {
 //interfaces for GameCard
 
 export interface GameCardEntity {
-    id: string,
+    gameId: string,
     name: string | null,
     platforms: Platforms | null,
     stores: Stores | null,
@@ -88,4 +88,26 @@ export interface DetailEntity {
     tags?: string,
     publishers?: string,
     descriptionRaw?: string,
+}
+
+//interfaces for Collection Card
+
+export interface CollectionCardEntity {
+    gameId: string,
+    name: string | null,
+    platforms: Platforms | null,
+    stores: Stores | null,
+    released: string | null,
+    background_image: string | null,
+    rating: number | null,
+    metacritic: string | null,
+    tags: Tag[] | null,
+    parent_platforms: ParentPlatforms | null,
+    genres: Genre[] | null,
+    firebaseId: string
+}
+
+export interface CollectionCardProps {
+    game: CollectionCardEntity,
+    navigation: any
 }

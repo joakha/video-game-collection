@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView } from "react-native"
-import { detailsPageStyles } from "../../styles/AppStyles"
+import { detailsPageStyles } from "../../styles/SearchPageStyles"
 import { useState, useEffect } from "react";
 import { apiURL, apiKey } from "../../constants/constants";
 import { DetailEntity } from "../../interfaces/interfaces";
@@ -61,26 +61,27 @@ const DetailsPage = ({ route }) => {
     }, []);
 
     return (
-        <ScrollView style={detailsPageStyles.scrollView}>
-            <View style={detailsPageStyles.body}>
-                {
-                    loading ?
-                        <Text>Loading game data...</Text> :
-                        <View style={detailsPageStyles.detailsView}>
-                            <Image
-                                source={{ uri: gameDetails.backgroundImageAdditional }}
-                                style={detailsPageStyles.image}
-                            />
-                            <Text style={detailsPageStyles.headerText}>{gameDetails.name}</Text>
-                            <Text style={detailsPageStyles.releaseText}>{gameDetails.released?.split("-")[0]}</Text>
-                            <Text style={detailsPageStyles.infoText}>{gameDetails.descriptionRaw?.slice(0, 150)}...</Text>
-                            <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Published by: </Text>{gameDetails.publishers}</Text>
-                            <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Developed by: </Text>{gameDetails.developers}</Text>
-                            <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Platforms: </Text>{gameDetails.platforms}</Text>
-                            <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Stores: </Text>{gameDetails.stores}</Text>
-                        </View>
-                }
-            </View>
+        <ScrollView
+            contentContainerStyle={detailsPageStyles.contentContainer}
+            style={detailsPageStyles.scrollView}
+        >
+            {
+                loading ?
+                    <Text>Loading game data...</Text> :
+                    <View style={detailsPageStyles.detailsView}>
+                        <Image
+                            source={{ uri: gameDetails.backgroundImageAdditional }}
+                            style={detailsPageStyles.image}
+                        />
+                        <Text style={detailsPageStyles.headerText}>{gameDetails.name}</Text>
+                        <Text style={detailsPageStyles.releaseText}>{gameDetails.released?.split("-")[0]}</Text>
+                        <Text style={detailsPageStyles.infoText}>{gameDetails.descriptionRaw?.slice(0, 150)}...</Text>
+                        <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Published by: </Text>{gameDetails.publishers}</Text>
+                        <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Developed by: </Text>{gameDetails.developers}</Text>
+                        <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Platforms: </Text>{gameDetails.platforms}</Text>
+                        <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Stores: </Text>{gameDetails.stores}</Text>
+                    </View>
+            }
         </ScrollView>
     )
 }

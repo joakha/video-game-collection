@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { statisticsStyles } from '../../styles/AppStyles';
+import { statisticsStyles } from '../../styles/StatisticsPageStyles';
 
 const StatisticsPage = () => {
   return (

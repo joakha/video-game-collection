@@ -1,5 +1,5 @@
 import { Text, View, FlatList } from 'react-native';
-import { searchPageStyles, searchbarStyles, searchButtonStyles } from '../../styles/AppStyles';
+import { searchPageStyles, searchbarStyles, searchButtonStyles } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
 import { Searchbar, Button } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
@@ -23,7 +23,7 @@ const SearchPage = ({ navigation }) => {
       if (gamesData.results) (
         gamesData.results.forEach((game) => {
           const formattedGame: GameCardEntity = {
-            id: game.id,
+            gameId: game.id,
             name: game.name,
             platforms: game.platforms,
             stores: game.stores,

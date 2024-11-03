@@ -60,7 +60,7 @@ export const detailsPageStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'gray',
   },
-  body: {
+  contentContainer: {
     alignItems: 'center',
     justifyContent: "flex-start",
   },
@@ -75,6 +75,7 @@ export const detailsPageStyles = StyleSheet.create({
   },
   headerText: {
     color: "white",
+    fontWeight: "bold",
     fontSize: 25,
     marginTop: 25,
     marginBottom: 10,
@@ -84,6 +85,7 @@ export const detailsPageStyles = StyleSheet.create({
   },
   releaseText: {
     color: "white",
+    fontWeight: "bold",
     fontSize: 20,
     marginBottom: 10,
   },
@@ -96,31 +98,8 @@ export const detailsPageStyles = StyleSheet.create({
     textAlign: "center"
   },
   nestedText: {
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: "bold",
     color: "#77dd77"
   },
 })
-
-//styles for collection page
-
-export const collectionStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    fontSize: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-//styles for statistics page
-
-export const statisticsStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    fontSize: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

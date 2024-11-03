@@ -6,26 +6,36 @@ import StatisticsPage from './components/statistics-page/StatisticsPage';
 import DetailsPage from './components/search-page/DetailsPage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const AppStack = createNativeStackNavigator();
-
-const AppStackNavigator = () => {
-  return (
-    <AppStack.Navigator>
-      <AppStack.Screen name="Search Page" options={{ headerShown: false}} component={SearchPage} />
-      <AppStack.Screen name="Game Details" component={DetailsPage} />
-    </AppStack.Navigator>
-  )
-}
-
-const AppTabs = createBottomTabNavigator();
-
 const App = () => {
+
+  const AppStack = createNativeStackNavigator();
+
+  const SearchStackNavigator = () => {
+    return (
+      <AppStack.Navigator>
+        <AppStack.Screen name="Search Page" options={{ headerShown: false }} component={SearchPage} />
+        <AppStack.Screen name="Game Details" component={DetailsPage} />
+      </AppStack.Navigator>
+    )
+  }
+
+  const CollectionStackNavigator = () => {
+    return (
+      <AppStack.Navigator>
+        <AppStack.Screen name="Collection Page" options={{ headerShown: false }} component={CollectionPage} />
+        <AppStack.Screen name="Game Details" component={DetailsPage} />
+      </AppStack.Navigator>
+    )
+  }
+
+  const AppTabs = createBottomTabNavigator();
+
   return (
     <NavigationContainer>
       <AppTabs.Navigator>
-        <AppTabs.Screen name="Search" options={{ headerShown: false}} component={AppStackNavigator} />
-        <AppTabs.Screen name="Collection" options={{ headerShown: false}} component={CollectionPage} />
-        <AppTabs.Screen name="Statistics" options={{ headerShown: false}} component={StatisticsPage} />
+        <AppTabs.Screen name="Search" options={{ headerShown: false }} component={SearchStackNavigator} />
+        <AppTabs.Screen name="Collection" options={{ headerShown: false }} component={CollectionStackNavigator} />
+        <AppTabs.Screen name="Statistics" options={{ headerShown: false }} component={StatisticsPage} />
       </AppTabs.Navigator>
     </NavigationContainer>
   );

@@ -100,6 +100,6 @@ export const detailsPageStyles = StyleSheet.create({
   nestedText: {
     fontSize: 17,
     fontWeight: "bold",
-    color: "#77dd77"
+    color: "#77dd77",
   },
 })

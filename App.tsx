@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SearchPage from './components/search-page/SearchPage';
 import CollectionPage from './components/collection-page/CollectionPage';
 import StatisticsPage from './components/statistics-page/StatisticsPage';
-import DetailsPage from './components/search-page/DetailsPage';
+import DetailsPage from './components/shared/DetailsPage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const App = () => {

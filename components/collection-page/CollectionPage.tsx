@@ -4,7 +4,7 @@ import { Button } from 'react-native-paper';
 import CollectionCard from './CollectionCard';
 import { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
-import { SearchGame, CollectionGame } from '../../interfaces/interfaces';
+import { MyGame, CollectionGame } from '../../interfaces/interfaces';
 import { database } from '../../firebase/firebaseConfig';
 
 const CollectionPage = ({ navigation }) => {
@@ -21,7 +21,7 @@ const CollectionPage = ({ navigation }) => {
 
       if (dbData) {
         const dataKeys = Object.keys(dbData);
-        const gamesData: SearchGame[] = Object.values(dbData);
+        const gamesData: MyGame[] = Object.values(dbData);
 
         const gamesDataWithkeys: CollectionGame[] = gamesData.map((game, index) => {
           const gameWithKey = { ...game, firebaseId: dataKeys[index] }

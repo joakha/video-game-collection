@@ -2,7 +2,7 @@
 
 export interface SearchGame {
     gameId: number,
-    name: string,
+    name?: string,
     released?: string,
     backgroundImage?: string,
     parentPlatform?: string,
@@ -20,12 +20,23 @@ export interface SearchCardProps {
 
 export interface CollectionGame {
     gameId: number,
-    name: string,
+    name?: string,
     released?: string,
     backgroundImage?: string,
     parentPlatform?: string,
     genres?: string,
+    status: string,
     firebaseId: string
+}
+
+export interface MyGame {
+    gameId: number,
+    name?: string,
+    released?: string,
+    backgroundImage?: string,
+    parentPlatform?: string,
+    genres?: string,
+    status: string
 }
 
 //interfaces for CollectionCard
@@ -38,7 +49,7 @@ export interface CollectionCardProps {
 //interfaces for DetailsPage
 
 export interface GameDetails {
-    name: string,
+    name?: string,
     released?: string,
     backgroundImageAdditional?: string,
     platforms?: string,

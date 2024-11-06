@@ -30,12 +30,12 @@ const DetailsPage = ({ route }) => {
 
     //received json is complicated so it is formatted here for ease of use later
     const formatFetchData = (gameData): GameDetails => {
-        const platforms: string = gameData.platforms.map(platform => platform.platform.name).join(", ") || "";
-        const stores: string = gameData.stores.map(store => store.store.domain).join(", ") || "";
+        const platforms: string = gameData.platforms?.map(platform => platform.platform.name).join(", ");
+        const stores: string = gameData.stores?.map(store => store.store.domain).join(", ");
 
-        const developers: string = gameData.developers.map(developer => developer.name).join(", ") || "";
-        const tags: string = gameData.tags.map(tag => tag.name).join(", ") || "";
-        const publishers: string = gameData.publishers.map(publisher => publisher.name).join(", ") || "";
+        const developers: string = gameData.developers?.map(developer => developer.name).join(", ");
+        const tags: string = gameData.tags?.map(tag => tag.name).join(", ");
+        const publishers: string = gameData.publishers?.map(publisher => publisher.name).join(", ");
 
         return {
             name: gameData.name,

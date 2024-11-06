@@ -8,16 +8,16 @@ import { Alert } from 'react-native';
 const SearchCard = ({ game, navigation }: SearchCardProps) => {
 
     const addToCollection = () => {
-        push(ref(database, 'myGames/'), game);
+        push(ref(database, 'myGames/'), { ...game, status: "Planned" });
         Alert.alert("Added", `${game.name} has been added to your game collection!`);
     }
 
     return (
         <Card
             onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}
-            style={searchPageStyles.gameCard}
+            style={searchPageStyles.searchCard}
         >
-            <Card.Cover source={{ uri: game.backgroundImage}} />
+            <Card.Cover source={{ uri: game.backgroundImage }} />
             <Card.Title
                 title={game.name} titleVariant='titleLarge'
                 subtitle={game.released?.split("-")[0]}

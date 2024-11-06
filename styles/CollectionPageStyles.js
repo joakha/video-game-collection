@@ -23,7 +23,7 @@ export const collectionPageStyles = StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
-  gameCard: {
+  collectionCard: {
     width: 320,
     height: 375,
     marginBottom: 10

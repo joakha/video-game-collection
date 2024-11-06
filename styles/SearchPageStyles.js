@@ -23,7 +23,7 @@ export const searchPageStyles = StyleSheet.create({
     fontSize: 20,
     color: "white",
   },
-  gameCard: {
+  searchCard: {
     width: 320,
     height: 375,
     marginBottom: 10

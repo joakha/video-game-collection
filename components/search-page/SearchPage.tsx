@@ -17,6 +17,7 @@ const SearchPage = ({ navigation }) => {
       setLoadingSearch(true);
       const response = await fetch(`${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`);
       if (!response.ok) throw new Error("Issue fetching game(s) data!")
+
       const gamesData = await response.json();
       let formattedData: SearchGame[] = [];
 
@@ -38,14 +39,14 @@ const SearchPage = ({ navigation }) => {
     const formattedData: SearchGame[] = [];
 
     gamesData.results.forEach(game => {
-      const parentPlatform: string = game.parent_platforms[0].platform.name || "";
-      const genres: string = game.genres.map(genre => genre.name).join(", ") || "";
+      const parentPlatform: string = game.parent_platforms?.[0]?.platform?.name || "";
+      const genres: string = game.genres?.map(genre => genre.name).join(", ") || "";
 
       const formattedGame: SearchGame = {
         gameId: game.id,
-        name: game.name,
-        released: game.released,
-        backgroundImage: game.background_image,
+        name: game.name || "",
+        released: game.released || "",
+        backgroundImage: game.background_image || "",
         parentPlatform: parentPlatform,
         genres: genres
       }

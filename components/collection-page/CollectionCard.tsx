@@ -42,7 +42,9 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
             onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}
             style={collectionPageStyles.collectionCard}
         >
-            <Card.Cover source={{ uri: game.backgroundImage }} />
+            {
+                game.backgroundImage && <Card.Cover source={{ uri: game.backgroundImage }} />
+            }
             <Card.Title
                 title={game.name} titleVariant='titleLarge'
                 subtitle={game.released?.split("-")[0]}

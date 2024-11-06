@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 //styles for statistics page
-
 export const statisticsStyles = StyleSheet.create({
     container: {
       flex: 1,

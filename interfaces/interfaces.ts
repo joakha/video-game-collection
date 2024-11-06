@@ -1,113 +1,50 @@
-//interfaces for handling api platforms
+//interfaces for SearchPage
 
-export interface PlatformObject {
-    id: number,
+export interface SearchGame {
+    gameId: number,
     name: string,
-    slug: string,
+    released?: string,
+    backgroundImage?: string,
+    parentPlatform?: string,
+    genres?: string
 }
 
-export interface PlatformEntity {
-    platform: PlatformObject,
-}
+//interfaces for SearchCard
 
-export interface ParentPlatforms {
-    parent_platforms: PlatformEntity[],
-}
-
-//interfaces for handling api stores
-
-export interface StoreObject {
-    id: number,
-    name: string,
-    slug: string,
-}
-
-export interface StoreEntity {
-    store: StoreObject,
-}
-
-export interface Stores {
-    stores: StoreEntity[],
-}
-
-//other interfaces for api
-
-export interface Genre {
-    id: number,
-    name: string,
-    slug: string,
-}
-
-export interface Tag {
-    id: number,
-    name: string,
-    slug: string,
-    language: string,
-    games_count: number,
-    image_background: string,
-}
-
-//interfaces for GameCard
-
-export interface GameCardEntity {
-    gameId: string,
-    name: string | null,
-    platforms: Platforms | null,
-    stores: Stores | null,
-    released: string | null,
-    background_image: string | null,
-    rating: number | null,
-    metacritic: string | null,
-    tags: Tag[] | null,
-    parent_platforms: ParentPlatforms | null,
-    genres: Genre[] | null,
-}
-
-export interface GameCardProps {
-    game: GameCardEntity,
+export interface SearchCardProps {
+    game: SearchGame,
     navigation: any
 }
 
-//interfaces for Details Page
+//interfaces for CollectionPage
 
-export interface Platforms {
-    platforms: PlatformEntity[],
-}
-
-export interface DetailEntity {
+export interface CollectionGame {
+    gameId: number,
     name: string,
-    metacritic?: string,
     released?: string,
     backgroundImage?: string,
-    backgroundImageAdditional?: string,
-    parentPlatforms?: string,
-    platforms?: string,
-    stores?: string,
-    developers?: string,
+    parentPlatform?: string,
     genres?: string,
-    tags?: string,
-    publishers?: string,
-    descriptionRaw?: string,
-}
-
-//interfaces for Collection Card
-
-export interface CollectionCardEntity {
-    gameId: string,
-    name: string | null,
-    platforms: Platforms | null,
-    stores: Stores | null,
-    released: string | null,
-    background_image: string | null,
-    rating: number | null,
-    metacritic: string | null,
-    tags: Tag[] | null,
-    parent_platforms: ParentPlatforms | null,
-    genres: Genre[] | null,
     firebaseId: string
 }
 
+//interfaces for CollectionCard
+
 export interface CollectionCardProps {
-    game: CollectionCardEntity,
+    game: CollectionGame,
     navigation: any
+}
+
+//interfaces for DetailsPage
+
+export interface GameDetails {
+    name: string,
+    released?: string,
+    backgroundImageAdditional?: string,
+    platforms?: string,
+    stores?: string,
+    developers?: string,
+    tags?: string,
+    publishers?: string,
+    descriptionRaw?: string,
 }

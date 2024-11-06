@@ -3,15 +3,13 @@ import { collectionPageStyles, collectionButtonStyles } from '../../styles/Colle
 import { Button } from 'react-native-paper';
 import CollectionCard from './CollectionCard';
 import { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import { GameCardEntity, CollectionCardEntity } from '../../interfaces/interfaces';
-import { firebaseApp } from '../../firebase/firebaseConfig';
+import { ref, onValue } from 'firebase/database';
+import { SearchGame, CollectionGame } from '../../interfaces/interfaces';
+import { database } from '../../firebase/firebaseConfig';
 
 const CollectionPage = ({ navigation }) => {
 
-  const database = getDatabase(firebaseApp);
-
-  const [myGames, setMyGames] = useState<CollectionCardEntity[]>([]);
+  const [myGames, setMyGames] = useState<CollectionGame[]>([]);
   const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false)
 
   useEffect(() => {
@@ -23,9 +21,9 @@ const CollectionPage = ({ navigation }) => {
 
       if (dbData) {
         const dataKeys = Object.keys(dbData);
-        const gamesData: GameCardEntity[] = Object.values(dbData);
+        const gamesData: SearchGame[] = Object.values(dbData);
 
-        const gamesDataWithkeys: CollectionCardEntity[] = gamesData.map((game, index) => {
+        const gamesDataWithkeys: CollectionGame[] = gamesData.map((game, index) => {
           const gameWithKey = { ...game, firebaseId: dataKeys[index] }
           return gameWithKey;
         })

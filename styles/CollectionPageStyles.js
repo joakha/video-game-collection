@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 //styles for collection page
-
 export const collectionPageStyles = StyleSheet.create({
   body: {
     flex: 1,

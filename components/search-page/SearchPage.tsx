@@ -3,49 +3,57 @@ import { searchPageStyles, searchbarStyles, searchButtonStyles } from '../../sty
 import { useState } from 'react';
 import { Searchbar, Button } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
-import { GameCardEntity } from '../../interfaces/interfaces';
-import GameCard from './GameCard';
+import { SearchGame } from '../../interfaces/interfaces';
+import SearchCard from './SearchCard';
 
 const SearchPage = ({ navigation }) => {
 
   const [gameKeyword, setGameKeyword] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [searchGames, setSearchGames] = useState<GameCardEntity[]>([]);
+  const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
+  const [searchGames, setSearchGames] = useState<SearchGame[]>([]);
 
   const fetchGames = async () => {
     try {
-      setLoading(true);
-      const response = await fetch(`${apiURL}/games?key=${apiKey}&search=${gameKeyword.replaceAll(/ /g, "-")}&search_exact=true&ordering=-rating`);
+      setLoadingSearch(true);
+      const response = await fetch(`${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`);
       if (!response.ok) throw new Error("Issue fetching game(s) data!")
       const gamesData = await response.json();
-      const formattedData: GameCardEntity[] = [];
+      let formattedData: SearchGame[] = [];
 
-      if (gamesData.results) (
-        gamesData.results.forEach((game) => {
-          const formattedGame: GameCardEntity = {
-            gameId: game.id,
-            name: game.name,
-            platforms: game.platforms,
-            stores: game.stores,
-            released: game.released,
-            background_image: game.background_image,
-            rating: game.rating,
-            metacritic: game.metacritic,
-            tags: game.tags,
-            parent_platforms: game.parent_platforms,
-            genres: game.genres
-          }
-
-          formattedData.push(formattedGame);
-        })
-      )
+      if (gamesData.results) {
+        formattedData = formatFetchData(gamesData);
+      }
 
       setSearchGames(formattedData);
-      setLoading(false);
+      setLoadingSearch(false);
       setGameKeyword("");
     } catch (err) {
       console.error(err);
     }
+  }
+
+  //received json is complicated so it is formatted here for ease of use later
+  const formatFetchData = (gamesData): SearchGame[] => {
+
+    const formattedData: SearchGame[] = [];
+
+    gamesData.results.forEach(game => {
+      const parentPlatform: string = game.parent_platforms[0].platform.name || "";
+      const genres: string = game.genres.map(genre => genre.name).join(", ") || "";
+
+      const formattedGame: SearchGame = {
+        gameId: game.id,
+        name: game.name,
+        released: game.released,
+        backgroundImage: game.background_image,
+        parentPlatform: parentPlatform,
+        genres: genres
+      }
+
+      formattedData.push(formattedGame);
+    })
+
+    return formattedData;
   }
 
   const ListEmptyComponent = () => {
@@ -61,14 +69,14 @@ const SearchPage = ({ navigation }) => {
 
       <View style={searchPageStyles.flatlistView}>
         {
-          loading ?
+          loadingSearch ?
             <Text style={searchPageStyles.text}>Loading...</Text> :
             <FlatList
               data={searchGames}
               ListEmptyComponent={ListEmptyComponent}
               renderItem={({ item }) => {
                 return (
-                  <GameCard game={item} navigation={navigation} />
+                  <SearchCard game={item} navigation={navigation} />
                 )
               }}
             />

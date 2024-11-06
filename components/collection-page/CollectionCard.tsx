@@ -1,40 +1,45 @@
 import { Card, Text, Button } from 'react-native-paper';
 import { searchPageStyles } from '../../styles/SearchPageStyles';
-import { firebaseApp } from '../../firebase/firebaseConfig';
-import { getDatabase, ref, remove } from "firebase/database";
+import { database } from '../../firebase/firebaseConfig';
+import { ref, remove, update } from "firebase/database";
 import { CollectionCardProps } from '../../interfaces/interfaces';
+import { Alert } from 'react-native';
 
 const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
 
-    const database = getDatabase(firebaseApp);
+    const removeGame = () => {
+        Alert.alert("Warning", `Are you sure you want to remove ${game.name} from your collection?`, [
+            {
+                text: "Cancel",
+            },
+            {
+                text: "Remove",
+                onPress: () => remove(ref(database, `myGames/${game.firebaseId}`)),
+                style: "destructive"
+            }
+        ]);
+    }
 
-    const removeGame = (firebaseId: string) => {
-        remove(ref(database, `myGames/${firebaseId}`));
-    }   
-
-    const titleString = game.name ? game.name : "Title not found!";
-    const releaseYearString = game.released ? game.released.split("-")[0] : "Release year not found!";
-    const genreString = game.genres ? game.genres.map(genre => genre.name).join(", ") : "Genre(s) not found!";
-    const mainPlatformString = game.parent_platforms ? game.parent_platforms[0].platform.name : "Main platform not found!";
+    const updateStatus = () => {
+        update(ref(database, `myGames/${game.firebaseId}`), { name: "hello" });
+    }
 
     return (
-        <Card style={searchPageStyles.gameCard}>
-            {
-                game.background_image ?
-                    <Card.Cover source={{ uri: game.background_image }} /> :
-                    <Card.Cover />
-            }
+        <Card
+            onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}
+            style={searchPageStyles.gameCard}
+        >
+            <Card.Cover source={{ uri: game.backgroundImage }} />
             <Card.Title
-                title={titleString} titleVariant='titleLarge'
-                subtitle={releaseYearString}
+                title={game.name} titleVariant='titleLarge'
+                subtitle={game.released?.split("-")[0]}
             />
             <Card.Content>
-                <Text variant="bodyLarge">{genreString}</Text>
-                <Text variant="bodyMedium">{mainPlatformString}</Text>
+                <Text variant="bodyLarge">{game.genres}</Text>
+                <Text variant="bodyMedium">{game.parentPlatform}</Text>
             </Card.Content>
             <Card.Actions>
-                <Button onPress={() => removeGame(game.firebaseId)}>Remove from Collection</Button>
-                <Button onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}>Details</Button>
+                <Button onPress={removeGame}>Remove</Button>
             </Card.Actions>
         </Card>
     )

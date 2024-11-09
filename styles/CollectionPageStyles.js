@@ -39,3 +39,9 @@ export const collectionButtonStyles = {
   buttonColor: "#77dd77",
   textColor: "white"
 }
+
+export const collectionPickerStyles = {
+  width: 130,
+  backgroundColor: "#77dd77",
+  color: "white"
+}

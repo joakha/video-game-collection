@@ -8,14 +8,34 @@ const DetailsPage = ({ route }) => {
 
     const { gameId } = route.params;
     const [loading, setLoading] = useState<boolean>(false);
-    const [gameDetails, setGameDetails] = useState<GameDetails>({ name: "" });
+    const [gameDetails, setGameDetails] = useState<GameDetails>({
+        name: "",
+        released: "",
+        backgroundImageAdditional: "",
+        platforms: "",
+        stores: "",
+        developers: "",
+        tags: "",
+        publishers: "",
+        descriptionRaw: ""
+    });
 
     const fetchGameData = async () => {
         try {
             setLoading(true);
             const response = await fetch(`${apiURL}/games/${gameId}?key=${apiKey}`);
             const gameData = await response.json();
-            let formattedData: GameDetails = { name: "" };
+            let formattedData: GameDetails = {
+                name: "",
+                released: "",
+                backgroundImageAdditional: "",
+                platforms: "",
+                stores: "",
+                developers: "",
+                tags: "",
+                publishers: "",
+                descriptionRaw: ""
+            };
 
             if (gameData.detail !== "Not found.") {
                 formattedData = formatFetchData(gameData);

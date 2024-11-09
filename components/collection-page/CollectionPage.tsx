@@ -1,16 +1,18 @@
 import { Text, View, FlatList } from 'react-native';
-import { collectionPageStyles, collectionButtonStyles } from '../../styles/CollectionPageStyles';
-import { Button } from 'react-native-paper';
+import { collectionPageStyles, collectionPickerStyles } from '../../styles/CollectionPageStyles';
 import CollectionCard from './CollectionCard';
 import { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { MyGame, CollectionGame } from '../../interfaces/interfaces';
 import { database } from '../../firebase/firebaseConfig';
+import { Picker } from '@react-native-picker/picker';
 
 const CollectionPage = ({ navigation }) => {
 
   const [myGames, setMyGames] = useState<CollectionGame[]>([]);
-  const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false)
+  const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false);
+  const [sortedFilteredGames, setSortedFilteredGames] = useState<CollectionGame[]>([]);
+  const [sortOption, setSortOption] = useState<string>("Latest");
 
   useEffect(() => {
     const gamesRef = ref(database, 'myGames/');
@@ -29,17 +31,51 @@ const CollectionPage = ({ navigation }) => {
         })
 
         setMyGames(gamesDataWithkeys);
-
       } else {
-        setMyGames([]); //if no games are found, state will be empty
+        setMyGames([]);
       }
 
       setLoadingMyGames(false);
     })
   }, []);
 
-  const sortGames = () => {
-    console.log("hello!");
+  useEffect(() => {
+    if (myGames) {
+      setSortedFilteredGames(myGames.slice().sort((a, b) => a.name.localeCompare(b.name)));
+    } else {
+      setSortedFilteredGames([]);
+    }
+  }, [myGames])
+
+  const sortOptions = ["A-Z", "Z-A", "Latest", "Oldest"];
+
+  const sortGames = (option: string) => {
+    setSortOption(option);
+
+    switch (option) {
+      case "A-Z":
+        setSortedFilteredGames(myGames.slice().sort((a, b) => a.name.localeCompare(b.name)));
+        break;
+      case "Z-A":
+        setSortedFilteredGames(myGames.slice().sort((a, b) => b.name.localeCompare(a.name)));
+        break;
+      case "Latest":
+        setSortedFilteredGames(myGames.slice().sort((a, b) => {
+          const aDate = a.released ? new Date(a.released) : new Date(0);
+          const bDate = b.released ? new Date(b.released) : new Date(0);
+
+          return bDate.getTime() - aDate.getTime();
+        }));
+        break;
+      case "Oldest":
+        setSortedFilteredGames(myGames.slice().sort((a, b) => {
+          const aDate = a.released ? new Date(a.released) : new Date(0);
+          const bDate = b.released ? new Date(b.released) : new Date(0);
+
+          return aDate.getTime() - bDate.getTime();
+        }));
+        break;
+    }
   }
 
   const ListEmptyComponent = () => {
@@ -58,7 +94,8 @@ const CollectionPage = ({ navigation }) => {
           loadingMyGames ?
             <Text style={collectionPageStyles.text}>Loading...</Text> :
             <FlatList
-              data={myGames}
+              data={sortedFilteredGames}
+              keyExtractor={(item) => item.firebaseId}
               ListEmptyComponent={ListEmptyComponent}
               renderItem={({ item }) => {
                 return (
@@ -70,18 +107,21 @@ const CollectionPage = ({ navigation }) => {
       </View>
 
       <View style={collectionPageStyles.inputView}>
-        <Button
-          icon={collectionButtonStyles.icon}
-          buttonColor={collectionButtonStyles.buttonColor}
-          style={collectionButtonStyles.style}
-          textColor={collectionButtonStyles.textColor}
-          onPress={sortGames}
+        <Picker
+          style={collectionPickerStyles}
+          mode='dropdown'
+          selectedValue={sortOption}
+          onValueChange={(itemValue) => sortGames(itemValue)}
         >
-          Sort games
-        </Button>
+          {
+            sortOptions.map((option, index) => {
+              return <Picker.Item key={index} label={option} value={option} />
+            })
+          }
+        </Picker>
       </View>
 
-    </View>
+    </View >
   );
 }
 

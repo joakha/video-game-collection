@@ -58,13 +58,11 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                     style={{ width: 160 }}
                     mode='dropdown'
                     selectedValue={gameStatus}
-                    onValueChange={(itemValue, itemIndex) =>
-                        updateStatus(itemValue)
-                    }
+                    onValueChange={(itemValue) => updateStatus(itemValue)}
                 >
                     {
-                        Object.keys(gameStatusOptions).map(status => {
-                            return <Picker.Item color={gameStatusOptions[status]} label={status} value={status} />
+                        Object.keys(gameStatusOptions).map((status, index) => {
+                            return <Picker.Item key={index} color={gameStatusOptions[status]} label={status} value={status} />
                         })
                     }
                 </Picker>

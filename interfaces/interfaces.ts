@@ -2,11 +2,11 @@
 
 export interface SearchGame {
     gameId: number,
-    name?: string,
-    released?: string,
-    backgroundImage?: string,
-    parentPlatform?: string,
-    genres?: string
+    name: string,
+    released: string,
+    backgroundImage: string,
+    parentPlatform: string,
+    genres: string
 }
 
 //interfaces for SearchCard
@@ -20,22 +20,22 @@ export interface SearchCardProps {
 
 export interface CollectionGame {
     gameId: number,
-    name?: string,
-    released?: string,
-    backgroundImage?: string,
-    parentPlatform?: string,
-    genres?: string,
+    name: string,
+    released: string,
+    backgroundImage: string,
+    parentPlatform: string,
+    genres: string,
     status: string,
     firebaseId: string
 }
 
 export interface MyGame {
     gameId: number,
-    name?: string,
-    released?: string,
-    backgroundImage?: string,
-    parentPlatform?: string,
-    genres?: string,
+    name: string,
+    released: string,
+    backgroundImage: string,
+    parentPlatform: string,
+    genres: string,
     status: string
 }
 
@@ -49,13 +49,13 @@ export interface CollectionCardProps {
 //interfaces for DetailsPage
 
 export interface GameDetails {
-    name?: string,
-    released?: string,
-    backgroundImageAdditional?: string,
-    platforms?: string,
-    stores?: string,
-    developers?: string,
-    tags?: string,
-    publishers?: string,
-    descriptionRaw?: string,
+    name: string,
+    released: string,
+    backgroundImageAdditional: string,
+    platforms: string,
+    stores: string,
+    developers: string,
+    tags: string,
+    publishers: string,
+    descriptionRaw: string,
 }

@@ -52,69 +52,47 @@ const CollectionPage = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    setFilterOption("All");
-    setSortOption("A-Z");
-
     if (myGames) {
-      setSortedFilteredGames([...myGames]);
+      updateCollection();
     } else {
+      setFilterOption("All");
+      setSortOption("A-Z");
       setSortedFilteredGames([]);
     }
-  }, [myGames])
+  }, [myGames, filterOption, sortOption])
 
-  const filterGames = (option: string) => {
-    setFilterOption(option);
-    setSortOption("A-Z");
+  const updateCollection = () => {
 
-    switch (option) {
-      case "All":
-        setSortedFilteredGames([...myGames]);
-        break;
-      case "Playing":
-        setSortedFilteredGames([...myGames].filter(game => game.status === "Playing"));
-        break;
-      case "Completed":
-        setSortedFilteredGames([...myGames].filter(game => game.status === "Completed"));
-        break;
-      case "Paused":
-        setSortedFilteredGames([...myGames].filter(game => game.status === "Paused"));
-        break;
-      case "Dropped":
-        setSortedFilteredGames([...myGames].filter(game => game.status === "Dropped"));
-        break;
-      case "Planned":
-        setSortedFilteredGames([...myGames].filter(game => game.status === "Planned"));
-        break;
-    }
-  }
+    let gameCollection = [...myGames];
 
-  const sortGames = (option: string) => {
-    setSortOption(option);
+    if (filterOption !== "All") gameCollection = gameCollection.filter(game => game.status === filterOption);
 
-    switch (option) {
+    switch (sortOption) {
       case "A-Z":
-        setSortedFilteredGames(sortedFilteredGames.sort((a, b) => a.name.localeCompare(b.name)));
+        gameCollection.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case "Z-A":
-        setSortedFilteredGames(sortedFilteredGames.sort((a, b) => b.name.localeCompare(a.name)));
+        gameCollection.sort((a, b) => b.name.localeCompare(a.name));
         break;
       case "Latest":
-        setSortedFilteredGames(sortedFilteredGames.sort((a, b) => {
+        gameCollection.sort((a, b) => {
           const aDate = a.released ? new Date(a.released) : new Date(0);
           const bDate = b.released ? new Date(b.released) : new Date(0);
 
           return bDate.getTime() - aDate.getTime();
-        }));
+        });
         break;
       case "Oldest":
-        setSortedFilteredGames(sortedFilteredGames.sort((a, b) => {
+        gameCollection.sort((a, b) => {
           const aDate = a.released ? new Date(a.released) : new Date(0);
           const bDate = b.released ? new Date(b.released) : new Date(0);
 
           return aDate.getTime() - bDate.getTime();
-        }));
+        });
         break;
     }
+
+    setSortedFilteredGames(gameCollection);
   }
 
   return (
@@ -141,7 +119,7 @@ const CollectionPage = ({ navigation }) => {
         <Picker
           style={collectionFilterPickerStyles}
           selectedValue={filterOption}
-          onValueChange={(itemValue) => filterGames(itemValue)}
+          onValueChange={(itemValue) => setFilterOption(itemValue)}
         >
           {
             Object.keys(filterOptions).map((option, index) => {
@@ -153,7 +131,7 @@ const CollectionPage = ({ navigation }) => {
         <Picker
           style={collectionSortPickerStyles}
           selectedValue={sortOption}
-          onValueChange={(itemValue) => sortGames(itemValue)}
+          onValueChange={(itemValue) => setSortOption(itemValue)}
         >
           {
             sortOptions.map((option, index) => {

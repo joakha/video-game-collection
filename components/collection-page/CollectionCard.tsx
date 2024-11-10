@@ -11,6 +11,19 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
 
     const [gameStatus, setGameStatus] = useState(game.status);
 
+    const gameStatusOptions = {
+        green: "Playing",
+        blue: "Completed",
+        orange: "Paused",
+        red: "Dropped",
+        grey: "Planned"
+      };
+
+    const updateStatus = (itemValue) => {
+        setGameStatus(itemValue)
+        update(ref(database, `myGames/${game.firebaseId}`), { status: itemValue });
+    }
+
     const removeGame = () => {
         Alert.alert("Warning", `Are you sure you want to remove ${game.name} from your collection?`, [
             {
@@ -22,19 +35,6 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                 style: "destructive"
             }
         ]);
-    }
-
-    const updateStatus = (itemValue) => {
-        setGameStatus(itemValue)
-        update(ref(database, `myGames/${game.firebaseId}`), { status: itemValue });
-    }
-
-    const gameStatusOptions = {
-        Playing: "green",
-        Completed: "blue",
-        Paused: "orange",
-        Dropped: "red",
-        Planned: "grey"
     }
 
     return (
@@ -62,7 +62,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                 >
                     {
                         Object.keys(gameStatusOptions).map((status, index) => {
-                            return <Picker.Item key={index} color={gameStatusOptions[status]} label={status} value={status} />
+                            return <Picker.Item key={index} color={status} label={gameStatusOptions[status]} value={gameStatusOptions[status]} />
                         })
                     }
                 </Picker>

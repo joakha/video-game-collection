@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from "react-native"
+import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native"
 import { detailsPageStyles } from "../../styles/DetailsPageStyles";
 import { useState, useEffect } from "react";
 import { apiURL, apiKey } from "../../constants/constants";
@@ -7,7 +7,7 @@ import { GameDetails } from "../../interfaces/interfaces";
 const DetailsPage = ({ route }) => {
 
     const { gameId } = route.params;
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingDetails, setLoadingDetails] = useState<boolean>(false);
     const [gameDetails, setGameDetails] = useState<GameDetails>({
         name: "",
         released: "",
@@ -20,9 +20,9 @@ const DetailsPage = ({ route }) => {
         descriptionRaw: ""
     });
 
-    const fetchGameData = async () => {
+    const fetchGameDetails = async () => {
         try {
-            setLoading(true);
+            setLoadingDetails(true);
             const response = await fetch(`${apiURL}/games/${gameId}?key=${apiKey}`);
             const gameData = await response.json();
             let formattedData: GameDetails = {
@@ -42,9 +42,10 @@ const DetailsPage = ({ route }) => {
             }
 
             setGameDetails(formattedData);
-            setLoading(false);
         } catch (err) {
             console.log(err)
+        } finally {
+            setLoadingDetails(false);
         }
     }
 
@@ -71,7 +72,7 @@ const DetailsPage = ({ route }) => {
     }
 
     useEffect(() => {
-        fetchGameData();
+        fetchGameDetails();
     }, []);
 
     return (
@@ -80,8 +81,8 @@ const DetailsPage = ({ route }) => {
             style={detailsPageStyles.scrollView}
         >
             {
-                loading ?
-                    <Text>Loading game data...</Text> :
+                loadingDetails ?
+                    <ActivityIndicator size="large" /> :
                     <View style={detailsPageStyles.detailsView}>
                         <Image
                             source={{ uri: gameDetails.backgroundImageAdditional }}

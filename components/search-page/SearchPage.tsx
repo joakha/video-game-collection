@@ -1,10 +1,11 @@
-import { Text, View, FlatList } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { searchPageStyles, searchbarStyles, searchButtonStyles } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
 import { Searchbar, Button } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
 import { SearchGame } from '../../interfaces/interfaces';
 import SearchCard from './SearchCard';
+import { ListEmptyComponent } from '../../constants/constants';
 
 const SearchPage = ({ navigation }) => {
 
@@ -26,10 +27,11 @@ const SearchPage = ({ navigation }) => {
       }
 
       setSearchGames(formattedData);
-      setLoadingSearch(false);
       setGameKeyword("");
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoadingSearch(false);
     }
   }
 
@@ -57,21 +59,13 @@ const SearchPage = ({ navigation }) => {
     return formattedData;
   }
 
-  const ListEmptyComponent = () => {
-    return (
-      <Text style={searchPageStyles.text}>
-        No games to show... Yet!
-      </Text>
-    )
-  }
-
   return (
     <View style={searchPageStyles.body}>
 
       <View style={searchPageStyles.flatlistView}>
         {
           loadingSearch ?
-            <Text style={searchPageStyles.text}>Loading...</Text> :
+            <ActivityIndicator size='large' /> :
             <FlatList
               data={searchGames}
               ListEmptyComponent={ListEmptyComponent}

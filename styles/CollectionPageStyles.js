@@ -11,6 +11,8 @@ export const collectionPageStyles = StyleSheet.create({
   inputView: {
     marginBottom: 15,
     marginTop: 15,
+    flexDirection: "row",
+    gap: 15,
     alignItems: "center",
   },
   flatlistView: {
@@ -22,6 +24,7 @@ export const collectionPageStyles = StyleSheet.create({
   text: {
     fontSize: 20,
     color: "white",
+    fontWeight: "bold"
   },
   collectionCard: {
     width: 320,
@@ -30,18 +33,14 @@ export const collectionPageStyles = StyleSheet.create({
   },
 });
 
-export const collectionButtonStyles = {
-  style: {
-    marginTop: 20,
-    padding: 5
-  },
-  icon: "search-web",
-  buttonColor: "#77dd77",
-  textColor: "white"
+export const collectionFilterPickerStyles = {
+  width: 160,
+  backgroundColor: "#77dd77",
+  color: "white"
 }
 
-export const collectionPickerStyles = {
-  width: 130,
+export const collectionSortPickerStyles = {
+  width: 125,
   backgroundColor: "#77dd77",
   color: "white"
 }

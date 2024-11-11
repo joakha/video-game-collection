@@ -8,10 +8,9 @@ export const searchPageStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: "space-between",
   },
-  inputView: {
-    marginBottom: 15,
-    marginTop: 15,
-    alignItems: "center",
+  text: {
+    fontSize: 20,
+    color: "white",
   },
   flatlistView: {
     flex: 1,
@@ -19,21 +18,33 @@ export const searchPageStyles = StyleSheet.create({
     alignItems: "center",
     marginTop: 30,
   },
-  text: {
-    fontSize: 20,
-    color: "white",
-  },
   searchCard: {
     width: 320,
     height: 375,
     marginBottom: 10
+  },
+  inputView: {
+    marginBottom: 15,
+    marginTop: 15,
+    flexDirection: "column",
+    gap: 10,
+  },
+  paginationView : {
+    flexDirection: "row",
+    gap: 10,
+    justifyContent: "space-between"
+  },
+  searchView: {
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center"
   },
 });
 
 export const searchbarStyles = {
   style: {
     backgroundColor: "#77dd77",
-    width: 300,
+    width: 200,
   },
   inputStyle: {
     color: "white",
@@ -44,12 +55,8 @@ export const searchbarStyles = {
   icon: "gamepad-variant"
 };
 
-export const searchButtonStyles = {
-  style: {
-    marginTop: 20,
-    padding: 5
-  },
-  icon: "search-web",
-  buttonColor: "#77dd77",
-  textColor: "white"
+export const buttonStyles = {
+  iconColor: "white",
+  containerColor: "#77dd77",
+  size: 35
 }

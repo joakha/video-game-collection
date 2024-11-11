@@ -40,7 +40,7 @@ export const collectionFilterPickerStyles = {
 }
 
 export const collectionSortPickerStyles = {
-  width: 125,
+  width: 130,
   backgroundColor: "#77dd77",
-  color: "white"
+  color: "white",
 }

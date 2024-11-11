@@ -81,8 +81,9 @@ const DetailsPage = ({ route }) => {
             style={detailsPageStyles.scrollView}
         >
             {
-                loadingDetails ?
-                    <ActivityIndicator size="large" /> :
+                loadingDetails ? (
+                    <ActivityIndicator size="large" />
+                ) : (
                     <View style={detailsPageStyles.detailsView}>
                         <Image
                             source={{ uri: gameDetails.backgroundImageAdditional }}
@@ -96,6 +97,7 @@ const DetailsPage = ({ route }) => {
                         <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Platforms: </Text>{gameDetails.platforms}</Text>
                         <Text style={detailsPageStyles.infoText}><Text style={detailsPageStyles.nestedText}>Stores: </Text>{gameDetails.stores}</Text>
                     </View>
+                )
             }
         </ScrollView>
     )

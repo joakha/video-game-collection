@@ -100,18 +100,18 @@ const CollectionPage = ({ navigation }) => {
 
       <View style={collectionPageStyles.flatlistView}>
         {
-          loadingMyGames ?
-            <ActivityIndicator size='large' /> :
+          loadingMyGames ? (
+            <ActivityIndicator size='large' />
+          ) : (
             <FlatList
               data={sortedFilteredGames}
               keyExtractor={(item) => item.firebaseId}
               ListEmptyComponent={ListEmptyComponent}
               renderItem={({ item }) => {
-                return (
-                  <CollectionCard game={item} navigation={navigation} />
-                )
+                return <CollectionCard game={item} navigation={navigation} />
               }}
             />
+          )
         }
       </View>
 

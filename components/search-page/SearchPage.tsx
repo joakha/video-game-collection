@@ -1,7 +1,7 @@
 import { View, FlatList, ActivityIndicator } from 'react-native';
-import { searchPageStyles, searchbarStyles, searchButtonStyles } from '../../styles/SearchPageStyles';
+import { searchPageStyles, searchbarStyles, buttonStyles } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
-import { Searchbar, Button } from 'react-native-paper';
+import { Searchbar, IconButton } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
 import { SearchGame } from '../../interfaces/interfaces';
 import SearchCard from './SearchCard';
@@ -12,11 +12,15 @@ const SearchPage = ({ navigation }) => {
   const [gameKeyword, setGameKeyword] = useState<string>("");
   const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
   const [searchGames, setSearchGames] = useState<SearchGame[]>([]);
+  const [nextPage, setNextPage] = useState<string>("");
+  const [previousPage, setPreviousPage] = useState<string>("");
 
-  const fetchGames = async () => {
+  const defaultSearchString: string = `${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`;
+
+  const fetchGames = async (searchString: string) => {
     try {
       setLoadingSearch(true);
-      const response = await fetch(`${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`);
+      const response = await fetch(searchString);
       if (!response.ok) throw new Error("Issue fetching game(s) data!")
 
       const gamesData = await response.json();
@@ -27,6 +31,8 @@ const SearchPage = ({ navigation }) => {
       }
 
       setSearchGames(formattedData);
+      setNextPage(gamesData.next);
+      setPreviousPage(gamesData.previous);
       setGameKeyword("");
     } catch (err) {
       console.error(err);
@@ -64,44 +70,75 @@ const SearchPage = ({ navigation }) => {
 
       <View style={searchPageStyles.flatlistView}>
         {
-          loadingSearch ?
-            <ActivityIndicator size='large' /> :
+          loadingSearch ? (
+            <ActivityIndicator size='large' />
+          ) : (
             <FlatList
               data={searchGames}
               ListEmptyComponent={ListEmptyComponent}
               renderItem={({ item }) => {
-                return (
-                  <SearchCard game={item} navigation={navigation} />
-                )
+                return <SearchCard game={item} navigation={navigation} />
               }}
             />
+          )
         }
       </View>
 
       <View style={searchPageStyles.inputView}>
-        <Searchbar
-          placeholder="Type a game title"
-          onChangeText={setGameKeyword}
-          value={gameKeyword}
-          style={searchbarStyles.style}
-          inputStyle={searchbarStyles.inputStyle}
-          placeholderTextColor={searchbarStyles.placeholderTextColor}
-          selectionColor={searchbarStyles.selectionColor}
-          iconColor={searchbarStyles.iconColor}
-          icon={searchbarStyles.icon}
-        />
-        <Button
-          icon={searchButtonStyles.icon}
-          buttonColor={searchButtonStyles.buttonColor}
-          style={searchButtonStyles.style}
-          textColor={searchButtonStyles.textColor}
-          onPress={fetchGames}
-        >
-          Search games
-        </Button>
+
+        <View style={searchPageStyles.paginationView}>
+          {
+            //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
+            previousPage ? (
+              <IconButton
+                icon="arrow-left"
+                iconColor={buttonStyles.iconColor}
+                containerColor={buttonStyles.containerColor}
+                onPress={() => fetchGames(previousPage)}
+              />
+            ) : (
+              <View />
+            )
+          }
+          {
+            //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
+            nextPage ? (
+              <IconButton
+                icon="arrow-right"
+                iconColor={buttonStyles.iconColor}
+                containerColor={buttonStyles.containerColor}
+                onPress={() => fetchGames(nextPage)}
+              />
+            ) : (
+              <View />
+            )
+          }
+        </View>
+
+        <View style={searchPageStyles.searchView}>
+          <Searchbar
+            placeholder="Type a game title"
+            onChangeText={setGameKeyword}
+            value={gameKeyword}
+            style={searchbarStyles.style}
+            inputStyle={searchbarStyles.inputStyle}
+            placeholderTextColor={searchbarStyles.placeholderTextColor}
+            selectionColor={searchbarStyles.selectionColor}
+            iconColor={searchbarStyles.iconColor}
+            icon={searchbarStyles.icon}
+          />
+          <IconButton
+            size={buttonStyles.size}
+            icon="search-web"
+            iconColor={buttonStyles.iconColor}
+            containerColor={buttonStyles.containerColor}
+            onPress={() => fetchGames(defaultSearchString)}
+          />
+        </View>
+
       </View>
 
-    </View>
+    </View >
   );
 }
 

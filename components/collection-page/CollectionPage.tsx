@@ -7,6 +7,7 @@ import { MyGame, CollectionGame } from '../../interfaces/interfaces';
 import { database } from '../../firebase/firebaseConfig';
 import { Picker } from '@react-native-picker/picker';
 import { ListEmptyComponent } from '../../constants/constants';
+import { PaperProvider } from 'react-native-paper';
 
 const CollectionPage = ({ navigation }) => {
 
@@ -96,52 +97,54 @@ const CollectionPage = ({ navigation }) => {
   }
 
   return (
-    <View style={collectionPageStyles.body}>
+    <PaperProvider>
+      <View style={collectionPageStyles.body}>
 
-      <View style={collectionPageStyles.flatlistView}>
-        {
-          loadingMyGames ? (
-            <ActivityIndicator size='large' />
-          ) : (
-            <FlatList
-              data={sortedFilteredGames}
-              keyExtractor={(item) => item.firebaseId}
-              ListEmptyComponent={ListEmptyComponent}
-              renderItem={({ item }) => {
-                return <CollectionCard game={item} navigation={navigation} />
-              }}
-            />
-          )
-        }
-      </View>
-
-      <View style={collectionPageStyles.inputView}>
-        <Picker
-          style={collectionFilterPickerStyles}
-          selectedValue={filterOption}
-          onValueChange={(itemValue) => setFilterOption(itemValue)}
-        >
+        <View style={collectionPageStyles.flatlistView}>
           {
-            Object.keys(filterOptions).map((option, index) => {
-              return <Picker.Item key={index} color={option} label={filterOptions[option]} value={filterOptions[option]} />
-            })
+            loadingMyGames ? (
+              <ActivityIndicator size='large' />
+            ) : (
+              <FlatList
+                data={sortedFilteredGames}
+                keyExtractor={(item) => item.firebaseId}
+                ListEmptyComponent={ListEmptyComponent}
+                renderItem={({ item }) => {
+                  return <CollectionCard game={item} navigation={navigation} />
+                }}
+              />
+            )
           }
-        </Picker>
+        </View>
 
-        <Picker
-          style={collectionSortPickerStyles}
-          selectedValue={sortOption}
-          onValueChange={(itemValue) => setSortOption(itemValue)}
-        >
-          {
-            sortOptions.map((option, index) => {
-              return <Picker.Item key={index} label={option} value={option} />
-            })
-          }
-        </Picker>
-      </View>
+        <View style={collectionPageStyles.inputView}>
+          <Picker
+            style={collectionFilterPickerStyles}
+            selectedValue={filterOption}
+            onValueChange={(itemValue) => setFilterOption(itemValue)}
+          >
+            {
+              Object.keys(filterOptions).map((option, index) => {
+                return <Picker.Item key={index} color={option} label={filterOptions[option]} value={filterOptions[option]} />
+              })
+            }
+          </Picker>
 
-    </View >
+          <Picker
+            style={collectionSortPickerStyles}
+            selectedValue={sortOption}
+            onValueChange={(itemValue) => setSortOption(itemValue)}
+          >
+            {
+              sortOptions.map((option, index) => {
+                return <Picker.Item key={index} label={option} value={option} />
+              })
+            }
+          </Picker>
+        </View>
+
+      </View >
+    </PaperProvider>
   );
 }
 

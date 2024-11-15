@@ -19,7 +19,7 @@ export const searchPageStyles = StyleSheet.create({
     marginTop: 30,
   },
   searchCard: {
-    width: 320,
+    width: 325,
     height: 375,
     marginBottom: 10
   },

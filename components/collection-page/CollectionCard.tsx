@@ -1,4 +1,4 @@
-import { Card, Text, Button } from 'react-native-paper';
+import { Card, Text, IconButton, PaperProvider } from 'react-native-paper';
 import { collectionPageStyles } from '../../styles/CollectionPageStyles';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, remove, update } from "firebase/database";
@@ -6,6 +6,8 @@ import { CollectionCardProps } from '../../interfaces/interfaces';
 import { Picker } from '@react-native-picker/picker';
 import { Alert } from 'react-native';
 import { useState } from 'react';
+import { collectionCardPickerStyles } from '../../styles/CollectionPageStyles';
+import ReviewModal from './ReviewModal';
 
 const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
 
@@ -17,7 +19,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
         orange: "Paused",
         red: "Dropped",
         grey: "Planned"
-      };
+    };
 
     const updateStatus = (itemValue) => {
         setGameStatus(itemValue)
@@ -55,7 +57,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
             </Card.Content>
             <Card.Actions>
                 <Picker
-                    style={{ width: 160 }}
+                    style={collectionCardPickerStyles}
                     mode='dropdown'
                     selectedValue={gameStatus}
                     onValueChange={(itemValue) => updateStatus(itemValue)}
@@ -66,7 +68,11 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                         })
                     }
                 </Picker>
-                <Button onPress={removeGame}>Remove</Button>
+                <ReviewModal game={game} />
+                <IconButton
+                    icon="trash-can"
+                    onPress={removeGame}
+                />
             </Card.Actions>
         </Card>
     )

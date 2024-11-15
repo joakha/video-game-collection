@@ -27,7 +27,7 @@ export const collectionPageStyles = StyleSheet.create({
     fontWeight: "bold"
   },
   collectionCard: {
-    width: 320,
+    width: 325,
     height: 375,
     marginBottom: 10
   },
@@ -37,10 +37,46 @@ export const collectionFilterPickerStyles = {
   width: 160,
   backgroundColor: "#77dd77",
   color: "white"
-}
+};
 
 export const collectionSortPickerStyles = {
   width: 130,
   backgroundColor: "#77dd77",
   color: "white",
+};
+
+export const collectionCardPickerStyles = {
+  width: 160,
+};
+
+export const reviewModalStyles = StyleSheet.create({
+  modalBody: {
+    backgroundColor: 'white',
+    paddingTop: 20,
+    paddingBottom: 10,
+    width: 325,
+    height: 500,
+  },
+  contentBody: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "100%",
+  },
+  headerText: {
+    fontSize: 16,
+    marginBottom: 20
+  },
+  buttonView: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginTop: 10
+  }
+});
+
+export const modalPickerStyles = {
+  width: 120,
+  backgroundColor: "#77dd77",
+  color: "white",
+  marginTop: 20
 }

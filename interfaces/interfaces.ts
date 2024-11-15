@@ -26,6 +26,8 @@ export interface CollectionGame {
     parentPlatform: string,
     genres: string,
     status: string,
+    review: string,
+    reviewScore: string,
     firebaseId: string
 }
 
@@ -36,7 +38,9 @@ export interface MyGame {
     backgroundImage: string,
     parentPlatform: string,
     genres: string,
-    status: string
+    status: string,
+    review: string,
+    reviewScore: string
 }
 
 //interfaces for CollectionCard
@@ -44,6 +48,12 @@ export interface MyGame {
 export interface CollectionCardProps {
     game: CollectionGame,
     navigation: any
+}
+
+//interfaces for ReviewModal
+
+export interface ReviewModalProps {
+    game: CollectionGame
 }
 
 //interfaces for DetailsPage

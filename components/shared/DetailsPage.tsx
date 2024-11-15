@@ -2,9 +2,9 @@ import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native"
 import { detailsPageStyles } from "../../styles/DetailsPageStyles";
 import { useState, useEffect } from "react";
 import { apiURL, apiKey } from "../../constants/constants";
-import { GameDetails } from "../../interfaces/interfaces";
+import { GameDetails, DetailsPageProps } from "../../interfaces/interfaces";
 
-const DetailsPage = ({ route }) => {
+const DetailsPage = ({ route }: DetailsPageProps) => {
 
     const { gameId } = route.params;
     const [loadingDetails, setLoadingDetails] = useState<boolean>(false);

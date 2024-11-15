@@ -1,5 +1,4 @@
 //interfaces for SearchPage
-
 export interface SearchGame {
     gameId: number,
     name: string,
@@ -9,15 +8,17 @@ export interface SearchGame {
     genres: string
 }
 
-//interfaces for SearchCard
+export interface SearchPageProps {
+    navigation: any
+}
 
+//interfaces for SearchCard
 export interface SearchCardProps {
     game: SearchGame,
     navigation: any
 }
 
 //interfaces for CollectionPage
-
 export interface CollectionGame {
     gameId: number,
     name: string,
@@ -43,21 +44,39 @@ export interface MyGame {
     reviewScore: string
 }
 
-//interfaces for CollectionCard
+export interface FilterOptions {
+    black: string,
+    green: string,
+    blue: string,
+    orange: string,
+    red: string,
+    grey: string
+}
 
+export interface CollectionPageProps {
+    navigation: any
+}
+
+//interfaces for CollectionCard
 export interface CollectionCardProps {
     game: CollectionGame,
     navigation: any
 }
 
-//interfaces for ReviewModal
+export interface StatusOptions {
+    green: string,
+    blue: string,
+    orange: string,
+    red: string,
+    grey: string
+}
 
+//interfaces for ReviewModal
 export interface ReviewModalProps {
     game: CollectionGame
 }
 
 //interfaces for DetailsPage
-
 export interface GameDetails {
     name: string,
     released: string,
@@ -68,4 +87,8 @@ export interface GameDetails {
     tags: string,
     publishers: string,
     descriptionRaw: string,
+}
+
+export interface DetailsPageProps {
+    route: any
 }

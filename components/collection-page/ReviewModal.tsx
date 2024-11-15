@@ -17,8 +17,6 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
 
     const scoreOptions = ["0", "1", "2", "3", "4", "5"];
 
-    const show = () => setVisible(true);
-
     const hide = () => {
         setReview(game.review);
         setReviewScore(game.reviewScore);
@@ -33,7 +31,7 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
 
     return (
         <>
-            <Button onPress={show}>Review</Button>
+            <Button onPress={() => setVisible(true)}>Review</Button>
 
             <Portal>
                 <Modal

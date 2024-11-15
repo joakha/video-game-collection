@@ -3,13 +3,13 @@ import { collectionPageStyles, collectionFilterPickerStyles, collectionSortPicke
 import CollectionCard from './CollectionCard';
 import { useState, useEffect } from 'react';
 import { ref, onValue } from 'firebase/database';
-import { MyGame, CollectionGame } from '../../interfaces/interfaces';
+import { MyGame, CollectionGame, CollectionPageProps, FilterOptions } from '../../interfaces/interfaces';
 import { database } from '../../firebase/firebaseConfig';
 import { Picker } from '@react-native-picker/picker';
 import { ListEmptyComponent } from '../../constants/constants';
 import { PaperProvider } from 'react-native-paper';
 
-const CollectionPage = ({ navigation }) => {
+const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
   const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false);
   const [myGames, setMyGames] = useState<CollectionGame[]>([]);
@@ -18,7 +18,7 @@ const CollectionPage = ({ navigation }) => {
   const [filterOption, setFilterOption] = useState<string>("All");
 
   const sortOptions = ["A-Z", "Z-A", "Latest", "Oldest"];
-  const filterOptions = {
+  const filterOptions: FilterOptions = {
     black: "All",
     green: "Playing",
     blue: "Completed",
@@ -125,7 +125,7 @@ const CollectionPage = ({ navigation }) => {
           >
             {
               Object.keys(filterOptions).map((option, index) => {
-                return <Picker.Item key={index} color={option} label={filterOptions[option]} value={filterOptions[option]} />
+                return <Picker.Item key={index} color={option} label={filterOptions[option as keyof FilterOptions]} value={filterOptions[option as keyof FilterOptions]} />
               })
             }
           </Picker>

@@ -3,11 +3,11 @@ import { searchPageStyles, searchbarStyles, buttonStyles } from '../../styles/Se
 import { useState } from 'react';
 import { Searchbar, IconButton } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
-import { SearchGame } from '../../interfaces/interfaces';
+import { SearchGame, SearchPageProps } from '../../interfaces/interfaces';
 import SearchCard from './SearchCard';
 import { ListEmptyComponent } from '../../constants/constants';
 
-const SearchPage = ({ navigation }) => {
+const SearchPage = ({ navigation }: SearchPageProps) => {
 
   const [gameKeyword, setGameKeyword] = useState<string>("");
   const [loadingSearch, setLoadingSearch] = useState<boolean>(false);

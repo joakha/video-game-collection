@@ -2,7 +2,7 @@ import { Card, Text, IconButton, PaperProvider } from 'react-native-paper';
 import { collectionPageStyles } from '../../styles/CollectionPageStyles';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, remove, update } from "firebase/database";
-import { CollectionCardProps } from '../../interfaces/interfaces';
+import { CollectionCardProps, StatusOptions } from '../../interfaces/interfaces';
 import { Picker } from '@react-native-picker/picker';
 import { Alert } from 'react-native';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
 
     const [gameStatus, setGameStatus] = useState(game.status);
 
-    const gameStatusOptions = {
+    const gameStatusOptions: StatusOptions = {
         green: "Playing",
         blue: "Completed",
         orange: "Paused",
@@ -21,7 +21,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
         grey: "Planned"
     };
 
-    const updateStatus = (itemValue) => {
+    const updateStatus = (itemValue: string) => {
         setGameStatus(itemValue)
         update(ref(database, `myGames/${game.firebaseId}`), { status: itemValue });
     }
@@ -64,7 +64,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                 >
                     {
                         Object.keys(gameStatusOptions).map((status, index) => {
-                            return <Picker.Item key={index} color={status} label={gameStatusOptions[status]} value={gameStatusOptions[status]} />
+                            return <Picker.Item key={index} color={status} label={gameStatusOptions[status as keyof StatusOptions]} value={gameStatusOptions[status as keyof StatusOptions]} />
                         })
                     }
                 </Picker>

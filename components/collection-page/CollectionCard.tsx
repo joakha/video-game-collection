@@ -1,4 +1,4 @@
-import { Card, Text, IconButton, PaperProvider } from 'react-native-paper';
+import { Card, Text, IconButton } from 'react-native-paper';
 import { collectionPageStyles } from '../../styles/CollectionPageStyles';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, remove, update } from "firebase/database";
@@ -64,7 +64,14 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                 >
                     {
                         Object.keys(gameStatusOptions).map((status, index) => {
-                            return <Picker.Item key={index} color={status} label={gameStatusOptions[status as keyof StatusOptions]} value={gameStatusOptions[status as keyof StatusOptions]} />
+                            return (
+                                <Picker.Item
+                                    key={index}
+                                    color={status}
+                                    label={gameStatusOptions[status as keyof StatusOptions]}
+                                    value={gameStatusOptions[status as keyof StatusOptions]}
+                                />
+                            )
                         })
                     }
                 </Picker>

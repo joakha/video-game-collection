@@ -53,7 +53,7 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
   }, []);
 
   useEffect(() => {
-    if (myGames) {
+    if (myGames.length > 0) {
       updateCollection();
     } else {
       setFilterOption("All");
@@ -125,7 +125,14 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
           >
             {
               Object.keys(filterOptions).map((option, index) => {
-                return <Picker.Item key={index} color={option} label={filterOptions[option as keyof FilterOptions]} value={filterOptions[option as keyof FilterOptions]} />
+                return (
+                  <Picker.Item
+                    key={index}
+                    color={option}
+                    label={filterOptions[option as keyof FilterOptions]}
+                    value={filterOptions[option as keyof FilterOptions]}
+                  />
+                )
               })
             }
           </Picker>
@@ -137,7 +144,13 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
           >
             {
               sortOptions.map((option, index) => {
-                return <Picker.Item key={index} label={option} value={option} />
+                return (
+                  <Picker.Item
+                    key={index}
+                    label={option}
+                    value={option}
+                  />
+                )
               })
             }
           </Picker>

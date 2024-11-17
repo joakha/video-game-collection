@@ -42,13 +42,13 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
   }
 
   //received json is complicated so it is formatted here for ease of use later
-  const formatFetchData = (gamesData): SearchGame[] => {
+  const formatFetchData = (gamesData: any): SearchGame[] => {
 
     const formattedData: SearchGame[] = [];
 
-    gamesData.results.forEach(game => {
+    gamesData.results.forEach((game: any) => {
       const parentPlatform: string = game.parent_platforms?.[0]?.platform?.name || "";
-      const genres: string = game.genres?.map(genre => genre.name).join(", ") || "";
+      const genres: string = game.genres?.map((genre: any) => genre.name).join(", ") || "";
 
       const formattedGame: SearchGame = {
         gameId: game.id,

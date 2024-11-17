@@ -92,3 +92,10 @@ export interface GameDetails {
 export interface DetailsPageProps {
     route: any
 }
+
+//interfaces for statistics page
+export interface StatusData {
+    value: number,
+    color: string,
+    text: string
+}

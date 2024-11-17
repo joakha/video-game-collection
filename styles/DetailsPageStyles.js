@@ -6,10 +6,6 @@ export const detailsPageStyles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'gray',
     },
-    contentContainer: {
-      alignItems: 'center',
-      justifyContent: "flex-start",
-    },
     detailsView: {
       alignItems: "center",
       marginTop: 30,

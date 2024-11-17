@@ -41,6 +41,7 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
                     contentContainerStyle={reviewModalStyles.modalBody}
                 >
                     <View style={reviewModalStyles.contentBody}>
+                        
                         <View style={{ height: 250, marginLeft: 20, marginRight: 20 }}>
                             <Text style={reviewModalStyles.headerText}>Your Review for {game.name}</Text>
                             <TextInput
@@ -71,6 +72,7 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
                                 <Button onPress={saveReview}>Save</Button>
                             </View>
                         </View>
+
                     </View>
                 </Modal>
             </Portal>

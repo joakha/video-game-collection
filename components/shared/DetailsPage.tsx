@@ -50,13 +50,13 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
     }
 
     //received json is complicated so it is formatted here for ease of use later
-    const formatFetchData = (gameData): GameDetails => {
-        const platforms: string = gameData.platforms?.map(platform => platform.platform.name).join(", ");
-        const stores: string = gameData.stores?.map(store => store.store.domain).join(", ");
+    const formatFetchData = (gameData: any): GameDetails => {
+        const platforms: string = gameData.platforms?.map((platform: any) => platform.platform.name).join(", ");
+        const stores: string = gameData.stores?.map((store: any) => store.store.domain).join(", ");
 
-        const developers: string = gameData.developers?.map(developer => developer.name).join(", ");
-        const tags: string = gameData.tags?.map(tag => tag.name).join(", ");
-        const publishers: string = gameData.publishers?.map(publisher => publisher.name).join(", ");
+        const developers: string = gameData.developers?.map((developer: any) => developer.name).join(", ");
+        const tags: string = gameData.tags?.map((tag: any) => tag.name).join(", ");
+        const publishers: string = gameData.publishers?.map((publisher: any) => publisher.name).join(", ");
 
         return {
             name: gameData.name,
@@ -76,10 +76,7 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
     }, []);
 
     return (
-        <ScrollView
-            contentContainerStyle={detailsPageStyles.contentContainer}
-            style={detailsPageStyles.scrollView}
-        >
+        <ScrollView style={detailsPageStyles.scrollView}>
             {
                 loadingDetails ? (
                     <ActivityIndicator size="large" />

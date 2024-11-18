@@ -5,30 +5,31 @@ import { ref, onValue } from 'firebase/database';
 import { MyGame, CollectionGame } from '../../interfaces/interfaces';
 import { database } from '../../firebase/firebaseConfig';
 import { PieChart } from "react-native-gifted-charts";
-import { StatusData } from '../../interfaces/interfaces';
+import { PieData } from '../../interfaces/interfaces';
 
 const StatisticsPage = () => {
 
   const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false);
   const [myGames, setMyGames] = useState<CollectionGame[]>([]);
-  const [statusData, setStatusData] = useState<StatusData[]>([]);
+  const [statusData, setStatusData] = useState<PieData[]>([]);
+  const [genreData, setGenreData] = useState<PieData[]>([]);
 
-  const formatStatusData = (gameData: CollectionGame[]) => {
-    const statusPieData: StatusData[] = [];
+  const formatStatusData = () => {
+    const pieStatusData: PieData[] = [];
 
     const statuses = [
       { status: "Playing", color: "#77dd77" },
-      { status: "Completed", color: "blue" },
-      { status: "Paused", color: "yellow" },
-      { status: "Dropped", color: "red" },
-      { status: "Planned", color: "gray" }
+      { status: "Completed", color: "#A7C7E7" },
+      { status: "Paused", color: "#FFFAA0" },
+      { status: "Dropped", color: "#FAA0A0" },
+      { status: "Planned", color: "darkgray" }
     ];
 
     statuses.forEach((status => {
-      const statusCount = gameData.filter(game => game.status === status.status).length;
+      const statusCount = myGames.filter(game => game.status === status.status).length;
 
       if (statusCount > 0) {
-        statusPieData.push(
+        pieStatusData.push(
           {
             value: statusCount,
             color: status.color,
@@ -38,7 +39,33 @@ const StatisticsPage = () => {
       }
     }))
 
-    return statusPieData
+    return pieStatusData;
+  }
+
+  const formatGenreData = () => {
+    const pieGenreData: PieData[] = [];
+    const genreCounts: any = {};
+
+    myGames.forEach(game => {
+      const gameGenre: string = game.genres?.split(",")[0] || "Unknown";
+
+      if (genreCounts[gameGenre]) {
+        genreCounts[gameGenre]++
+      } else {
+        genreCounts[gameGenre] = 1;
+      }
+    })
+
+    Object.keys(genreCounts).forEach(key => {
+      pieGenreData.push(
+        {
+          value: genreCounts[key],
+          text: `${genreCounts[key]} ${key}`
+        }
+      )
+    })
+
+    return pieGenreData;
   }
 
   useEffect(() => {
@@ -68,15 +95,17 @@ const StatisticsPage = () => {
 
   useEffect(() => {
     if (myGames.length > 0) {
-      setStatusData(formatStatusData(myGames));
+      setStatusData(formatStatusData());
+      setGenreData(formatGenreData());
     } else {
       setStatusData([]);
+      setGenreData([]);
     }
   }, [myGames]);
 
   return (
-    <ScrollView contentContainerStyle={statisticsStyles.body}>
-      <View style={statisticsStyles.chartsView}>
+    <ScrollView contentContainerStyle={statisticsStyles.contentBody}>
+      <View>
         {
           loadingMyGames ? (
             <ActivityIndicator size='large' />
@@ -84,14 +113,26 @@ const StatisticsPage = () => {
             <Text style={statisticsStyles.headerText}>No Games in Collection!</Text>
           ) : (
             <>
-              <Text style={statisticsStyles.headerText}>Games by Status</Text>
-              <PieChart
-                showText
-                textColor="black"
-                radius={150}
-                textSize={13}
-                data={statusData}
-              />
+              <View>
+                <Text style={statisticsStyles.headerText}>Games by Status</Text>
+                <PieChart
+                  showText
+                  textColor="black"
+                  radius={150}
+                  textSize={13}
+                  data={statusData}
+                />
+              </View>
+              <View>
+                <Text style={statisticsStyles.headerText}>Games by Main Genre</Text>
+                <PieChart
+                  showText
+                  textColor="black"
+                  radius={150}
+                  textSize={13}
+                  data={genreData}
+                />
+              </View>
             </>
           )
         }

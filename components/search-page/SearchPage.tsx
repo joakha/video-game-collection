@@ -89,7 +89,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
         <View style={searchPageStyles.paginationView}>
           {
             //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
-            previousPage ? (
+            previousPage && !loadingSearch ? (
               <IconButton
                 icon="arrow-left"
                 iconColor={buttonStyles.iconColor}
@@ -102,7 +102,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
           }
           {
             //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
-            nextPage ? (
+            nextPage && !loadingSearch ? (
               <IconButton
                 icon="arrow-right"
                 iconColor={buttonStyles.iconColor}

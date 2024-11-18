@@ -2,18 +2,18 @@ import { StyleSheet } from "react-native";
 
 //styles for statistics page
 export const statisticsStyles = StyleSheet.create({
-  body: {
+  contentBody: {
     flex: 1,
     alignItems: 'center',
-  },
-  chartsView: {
-    marginTop: 30
+    backgroundColor: 'gray'
   },
   headerText: {
     fontWeight: "bold",
     fontSize: 25,
     textAlign: "center",
-    marginBottom: 30
+    marginTop: 30,
+    marginBottom: 30,
+    color: "white"
   },
   });
   

@@ -94,8 +94,8 @@ export interface DetailsPageProps {
 }
 
 //interfaces for statistics page
-export interface StatusData {
+export interface PieData {
     value: number,
-    color: string,
+    color?: string,
     text: string
 }

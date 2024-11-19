@@ -2,17 +2,16 @@ import { View, FlatList, ActivityIndicator } from 'react-native';
 import { collectionPageStyles, collectionFilterPickerStyles, collectionSortPickerStyles } from '../../styles/CollectionPageStyles';
 import CollectionCard from './CollectionCard';
 import { useState, useEffect } from 'react';
-import { ref, onValue } from 'firebase/database';
-import { MyGame, CollectionGame, CollectionPageProps, FilterOptions } from '../../interfaces/interfaces';
-import { database } from '../../firebase/firebaseConfig';
+import { CollectionGame, CollectionPageProps, FilterOptions } from '../../interfaces/interfaces';
 import { Picker } from '@react-native-picker/picker';
 import { ListEmptyComponent } from '../../constants/constants';
 import { PaperProvider } from 'react-native-paper';
+import useGame from '../../hooks/useGame';
 
 const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
-  const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false);
-  const [myGames, setMyGames] = useState<CollectionGame[]>([]);
+  const { loadingMyGames, myGames } = useGame();
+
   const [sortedFilteredGames, setSortedFilteredGames] = useState<CollectionGame[]>([]);
   const [sortOption, setSortOption] = useState<string>("A-Z");
   const [filterOption, setFilterOption] = useState<string>("All");
@@ -29,31 +28,6 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
   };
 
   useEffect(() => {
-    const gamesRef = ref(database, 'myGames/');
-
-    onValue(gamesRef, (snapshot) => {
-      setLoadingMyGames(true);
-      const dbData = snapshot.val();
-
-      if (dbData) {
-        const dataKeys = Object.keys(dbData);
-        const gamesData: MyGame[] = Object.values(dbData);
-
-        const gamesDataWithkeys: CollectionGame[] = gamesData.map((game, index) => {
-          const gameWithKey = { ...game, firebaseId: dataKeys[index] }
-          return gameWithKey;
-        })
-
-        setMyGames(gamesDataWithkeys.sort((a, b) => a.name.localeCompare(b.name)));
-      } else {
-        setMyGames([]);
-      }
-
-      setLoadingMyGames(false);
-    })
-  }, []);
-
-  useEffect(() => {
     if (myGames.length > 0) {
       updateCollection();
     } else {
@@ -67,9 +41,8 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
     let gameCollection = [...myGames];
 
-    if (filterOption !== "All" && filterOption !== "Favorites" ) gameCollection = gameCollection.filter(game => game.status === filterOption);
-
-    if (filterOption === "Favorites" ) gameCollection = gameCollection.filter(game => game.isFavorite === true);
+    if (filterOption !== "All" && filterOption !== "Favorites") gameCollection = gameCollection.filter(game => game.status === filterOption);
+    if (filterOption === "Favorites") gameCollection = gameCollection.filter(game => game.isFavorite === true);
 
     switch (sortOption) {
       case "A-Z":

@@ -5,6 +5,7 @@ import CollectionPage from './components/collection-page/CollectionPage';
 import StatisticsPage from './components/statistics-page/StatisticsPage';
 import DetailsPage from './components/shared/DetailsPage';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import GameProvider from './context/GameProvider';
 
 const App = () => {
 
@@ -31,13 +32,15 @@ const App = () => {
   const AppTabs = createBottomTabNavigator();
 
   return (
-    <NavigationContainer>
-      <AppTabs.Navigator>
-        <AppTabs.Screen name="Search" options={{ headerShown: false }} component={SearchStackNavigator} />
-        <AppTabs.Screen name="Collection" options={{ headerShown: false }} component={CollectionStackNavigator} />
-        <AppTabs.Screen name="Statistics" options={{ headerShown: false }} component={StatisticsPage} />
-      </AppTabs.Navigator>
-    </NavigationContainer>
+    <GameProvider>
+      <NavigationContainer>
+        <AppTabs.Navigator>
+          <AppTabs.Screen name="Search" options={{ headerShown: false }} component={SearchStackNavigator} />
+          <AppTabs.Screen name="Collection" options={{ headerShown: false }} component={CollectionStackNavigator} />
+          <AppTabs.Screen name="Statistics" options={{ headerShown: false }} component={StatisticsPage} />
+        </AppTabs.Navigator>
+      </NavigationContainer>
+    </GameProvider>
   );
 }
 

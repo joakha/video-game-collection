@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+
 //interfaces for SearchPage
 export interface SearchGame {
     gameId: number,
@@ -101,4 +103,14 @@ export interface PieData {
     value: number,
     color?: string,
     text: string
+}
+
+//interfaces for GameContext
+export interface GameContextType {
+    loadingMyGames: boolean,
+    myGames: CollectionGame[],
+}
+
+export interface GameProviderType {
+    children: ReactNode
 }

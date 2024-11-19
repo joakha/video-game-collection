@@ -1,11 +1,16 @@
-import { Card, Text, Button } from 'react-native-paper';
+import { Card, Text, Button, IconButton } from 'react-native-paper';
 import { SearchCardProps } from '../../interfaces/interfaces';
 import { searchPageStyles } from '../../styles/SearchPageStyles';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, push } from "firebase/database";
 import { Alert } from 'react-native';
+import useGame from '../../hooks/useGame';
 
 const SearchCard = ({ game, navigation }: SearchCardProps) => {
+
+    const { myGames } = useGame();
+
+    const gameInCollection: boolean = myGames.some(collectionGame => collectionGame.gameId === game.gameId);
 
     const addToCollection = () => {
         push(ref(database, 'myGames/'), { ...game, status: "Planned", review: "", reviewScore: 0, isFavorite: false });
@@ -29,7 +34,16 @@ const SearchCard = ({ game, navigation }: SearchCardProps) => {
                 <Text variant="bodyMedium">{game.parentPlatform}</Text>
             </Card.Content>
             <Card.Actions>
-                <Button onPress={addToCollection}>Add</Button>
+                {
+                    gameInCollection ? (
+                        <>
+                            <Text>Game in Collection</Text>
+                            <IconButton icon="check" iconColor='green' />
+                        </>
+                    ) : (
+                        <Button onPress={addToCollection}>Add</Button>
+                    )
+                }
             </Card.Actions>
         </Card>
     )

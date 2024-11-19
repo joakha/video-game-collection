@@ -1,16 +1,14 @@
 import { statisticsStyles } from '../../styles/StatisticsPageStyles';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { useState, useEffect } from 'react';
-import { ref, onValue } from 'firebase/database';
-import { MyGame, CollectionGame } from '../../interfaces/interfaces';
-import { database } from '../../firebase/firebaseConfig';
 import { PieChart } from "react-native-gifted-charts";
 import { PieData } from '../../interfaces/interfaces';
+import useGame from '../../hooks/useGame';
 
 const StatisticsPage = () => {
 
-  const [loadingMyGames, setLoadingMyGames] = useState<boolean>(false);
-  const [myGames, setMyGames] = useState<CollectionGame[]>([]);
+  const { loadingMyGames, myGames } = useGame();
+
   const [statusData, setStatusData] = useState<PieData[]>([]);
   const [genreData, setGenreData] = useState<PieData[]>([]);
 
@@ -67,31 +65,6 @@ const StatisticsPage = () => {
 
     return pieGenreData;
   }
-
-  useEffect(() => {
-    const gamesRef = ref(database, 'myGames/');
-
-    onValue(gamesRef, (snapshot) => {
-      setLoadingMyGames(true);
-      const dbData = snapshot.val();
-
-      if (dbData) {
-        const dataKeys = Object.keys(dbData);
-        const gamesData: MyGame[] = Object.values(dbData);
-
-        const gamesDataWithkeys: CollectionGame[] = gamesData.map((game, index) => {
-          const gameWithKey = { ...game, firebaseId: dataKeys[index] }
-          return gameWithKey;
-        })
-
-        setMyGames(gamesDataWithkeys.sort((a, b) => a.name.localeCompare(b.name)));
-      } else {
-        setMyGames([]);
-      }
-
-      setLoadingMyGames(false);
-    })
-  }, []);
 
   useEffect(() => {
     if (myGames.length > 0) {

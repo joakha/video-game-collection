@@ -19,12 +19,13 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
   const sortOptions = ["A-Z", "Z-A", "Latest", "Oldest"];
   const filterOptions: FilterOptions = {
+    cyan: "Favorites",
     black: "All",
     green: "Playing",
     blue: "Completed",
     orange: "Paused",
     red: "Dropped",
-    grey: "Planned"
+    grey: "Planned",
   };
 
   useEffect(() => {
@@ -66,7 +67,9 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
     let gameCollection = [...myGames];
 
-    if (filterOption !== "All") gameCollection = gameCollection.filter(game => game.status === filterOption);
+    if (filterOption !== "All" && filterOption !== "Favorites" ) gameCollection = gameCollection.filter(game => game.status === filterOption);
+
+    if (filterOption === "Favorites" ) gameCollection = gameCollection.filter(game => game.isFavorite === true);
 
     switch (sortOption) {
       case "A-Z":

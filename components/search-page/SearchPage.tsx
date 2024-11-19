@@ -89,12 +89,12 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
         <View style={searchPageStyles.paginationView}>
           {
             //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
-            previousPage && !loadingSearch ? (
+            previousPage ? (
               <IconButton
                 icon="arrow-left"
                 iconColor={buttonStyles.iconColor}
                 containerColor={buttonStyles.containerColor}
-                onPress={() => fetchGames(previousPage)}
+                onPress={() => loadingSearch === false && fetchGames(previousPage)}
               />
             ) : (
               <View />
@@ -102,12 +102,12 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
           }
           {
             //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
-            nextPage && !loadingSearch ? (
+            nextPage ? (
               <IconButton
                 icon="arrow-right"
                 iconColor={buttonStyles.iconColor}
                 containerColor={buttonStyles.containerColor}
-                onPress={() => fetchGames(nextPage)}
+                onPress={() => loadingSearch === false && fetchGames(nextPage)}
               />
             ) : (
               <View />
@@ -132,7 +132,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             icon="search-web"
             iconColor={buttonStyles.iconColor}
             containerColor={buttonStyles.containerColor}
-            onPress={() => fetchGames(defaultSearchString)}
+            onPress={() => loadingSearch === false && fetchGames(defaultSearchString)}
           />
         </View>
 

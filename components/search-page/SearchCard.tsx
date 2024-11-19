@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 const SearchCard = ({ game, navigation }: SearchCardProps) => {
 
     const addToCollection = () => {
-        push(ref(database, 'myGames/'), { ...game, status: "Planned", review: "", reviewScore: 0 });
+        push(ref(database, 'myGames/'), { ...game, status: "Planned", review: "", reviewScore: 0, isFavorite: false });
         Alert.alert("Added", `${game.name} has been added to your game collection!`);
     }
 

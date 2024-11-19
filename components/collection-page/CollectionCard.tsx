@@ -4,7 +4,7 @@ import { database } from '../../firebase/firebaseConfig';
 import { ref, remove, update } from "firebase/database";
 import { CollectionCardProps, StatusOptions } from '../../interfaces/interfaces';
 import { Picker } from '@react-native-picker/picker';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useState } from 'react';
 import { collectionCardPickerStyles } from '../../styles/CollectionPageStyles';
 import ReviewModal from './ReviewModal';
@@ -20,6 +20,10 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
         red: "Dropped",
         grey: "Planned"
     };
+
+    const toggleFavorite = () => {
+        update(ref(database, `myGames/${game.firebaseId}`), { isFavorite: !game.isFavorite });
+    }
 
     const updateStatus = (itemValue: string) => {
         setGameStatus(itemValue)
@@ -52,8 +56,19 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                 subtitle={game.released?.split("-")[0]}
             />
             <Card.Content>
-                <Text variant="bodyLarge">{game.genres}</Text>
-                <Text variant="bodyMedium">{game.parentPlatform}</Text>
+                <View style={collectionPageStyles.collectionCardContent}>
+                    <View>
+                        <Text variant="bodyLarge">{game.genres}</Text>
+                        <Text variant="bodyMedium">{game.parentPlatform}</Text>
+                    </View>
+                    <View>
+                        <IconButton
+                            icon={game.isFavorite ? "star" : "star-outline"}
+                            onPress={toggleFavorite}
+                            iconColor='cyan'
+                        />
+                    </View>
+                </View>
             </Card.Content>
             <Card.Actions>
                 <Picker

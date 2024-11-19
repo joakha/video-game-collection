@@ -26,6 +26,7 @@ export interface CollectionGame {
     backgroundImage: string,
     parentPlatform: string,
     genres: string,
+    isFavorite: boolean,
     status: string,
     review: string,
     reviewScore: string,
@@ -39,18 +40,20 @@ export interface MyGame {
     backgroundImage: string,
     parentPlatform: string,
     genres: string,
+    isFavorite: boolean,
     status: string,
     review: string,
     reviewScore: string
 }
 
 export interface FilterOptions {
+    cyan: string,
     black: string,
     green: string,
     blue: string,
     orange: string,
     red: string,
-    grey: string
+    grey: string,
 }
 
 export interface CollectionPageProps {

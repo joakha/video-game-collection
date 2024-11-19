@@ -31,6 +31,10 @@ export const collectionPageStyles = StyleSheet.create({
     height: 375,
     marginBottom: 10
   },
+  collectionCardContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  }
 });
 
 export const collectionFilterPickerStyles = {

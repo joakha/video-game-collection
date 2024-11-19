@@ -29,7 +29,8 @@ export const collectionPageStyles = StyleSheet.create({
   collectionCard: {
     width: 325,
     height: 375,
-    marginBottom: 10
+    marginBottom: 10,
+    placeholderImage: require('../assets/placeholder-image.svg')
   },
   collectionCardContent: {
     flexDirection: "row",

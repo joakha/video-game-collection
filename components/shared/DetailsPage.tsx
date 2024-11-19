@@ -83,7 +83,7 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
                 ) : (
                     <View style={detailsPageStyles.detailsView}>
                         <Image
-                            source={{ uri: gameDetails.backgroundImageAdditional }}
+                            source={gameDetails.backgroundImageAdditional ? { uri: gameDetails.backgroundImageAdditional } : detailsPageStyles.image.placeholderImage}
                             style={detailsPageStyles.image}
                         />
                         <Text style={detailsPageStyles.headerText}>{gameDetails.name}</Text>

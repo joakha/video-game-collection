@@ -21,7 +21,8 @@ export const searchPageStyles = StyleSheet.create({
   searchCard: {
     width: 325,
     height: 375,
-    marginBottom: 10
+    marginBottom: 10,
+    placeholderImage: require('../assets/placeholder-image.svg')
   },
   inputView: {
     marginBottom: 15,

@@ -22,9 +22,7 @@ const SearchCard = ({ game, navigation }: SearchCardProps) => {
             onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}
             style={searchPageStyles.searchCard}
         >
-            {
-                game.backgroundImage && <Card.Cover source={{ uri: game.backgroundImage }} />
-            }
+            <Card.Cover source={game.backgroundImage ? { uri: game.backgroundImage } : searchPageStyles.searchCard.placeholderImage} />
             <Card.Title
                 title={game.name} titleVariant='titleLarge'
                 subtitle={game.released?.split("-")[0]}

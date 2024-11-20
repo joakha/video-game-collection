@@ -5,8 +5,9 @@ import { useState, useEffect } from 'react';
 import { CollectionGame, CollectionPageProps, FilterOptions } from '../../interfaces/interfaces';
 import { Picker } from '@react-native-picker/picker';
 import { ListEmptyComponent } from '../../constants/constants';
-import { PaperProvider } from 'react-native-paper';
+import { PaperProvider, Searchbar } from 'react-native-paper';
 import useGame from '../../hooks/useGame';
+import { searchbarStyles } from '../../styles/SharedStyles';
 
 const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
@@ -15,6 +16,7 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
   const [sortedFilteredGames, setSortedFilteredGames] = useState<CollectionGame[]>([]);
   const [sortOption, setSortOption] = useState<string>("A-Z");
   const [filterOption, setFilterOption] = useState<string>("All");
+  const [keyword, setKeyword] = useState<string>("");
 
   const sortOptions = ["A-Z", "Z-A", "Latest", "Oldest"];
   const filterOptions: FilterOptions = {
@@ -35,12 +37,13 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
       setSortOption("A-Z");
       setSortedFilteredGames([]);
     }
-  }, [myGames, filterOption, sortOption])
+  }, [myGames, filterOption, sortOption, keyword])
 
   const updateCollection = () => {
 
     let gameCollection = [...myGames];
 
+    if (keyword !== "") gameCollection = gameCollection.filter(game => game.name.toLowerCase().includes(keyword));
     if (filterOption !== "All" && filterOption !== "Favorites") gameCollection = gameCollection.filter(game => game.status === filterOption);
     if (filterOption === "Favorites") gameCollection = gameCollection.filter(game => game.isFavorite === true);
 
@@ -93,43 +96,59 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
           }
         </View>
 
-        <View style={collectionPageStyles.inputView}>
-          <Picker
-            style={collectionFilterPickerStyles}
-            selectedValue={filterOption}
-            onValueChange={(itemValue) => setFilterOption(itemValue)}
-          >
-            {
-              Object.keys(filterOptions).map((option, index) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    color={option}
-                    label={filterOptions[option as keyof FilterOptions]}
-                    value={filterOptions[option as keyof FilterOptions]}
-                  />
-                )
-              })
-            }
-          </Picker>
+        <View>
+          <View style={collectionPageStyles.inputView}>
+            <Searchbar
+              placeholder="Type a game title"
+              onChangeText={setKeyword}
+              value={keyword}
+              style={searchbarStyles.style}
+              inputStyle={searchbarStyles.inputStyle}
+              placeholderTextColor={searchbarStyles.placeholderTextColor}
+              selectionColor={searchbarStyles.selectionColor}
+              iconColor={searchbarStyles.iconColor}
+              icon={searchbarStyles.icon}
+            />
+          </View>
 
-          <Picker
-            style={collectionSortPickerStyles}
-            selectedValue={sortOption}
-            onValueChange={(itemValue) => setSortOption(itemValue)}
-          >
-            {
-              sortOptions.map((option, index) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    label={option}
-                    value={option}
-                  />
-                )
-              })
-            }
-          </Picker>
+          <View style={collectionPageStyles.inputView}>
+            <Picker
+              style={collectionFilterPickerStyles}
+              selectedValue={filterOption}
+              onValueChange={(itemValue) => setFilterOption(itemValue)}
+            >
+              {
+                Object.keys(filterOptions).map((option, index) => {
+                  return (
+                    <Picker.Item
+                      key={index}
+                      color={option}
+                      label={filterOptions[option as keyof FilterOptions]}
+                      value={filterOptions[option as keyof FilterOptions]}
+                    />
+                  )
+                })
+              }
+            </Picker>
+
+            <Picker
+              style={collectionSortPickerStyles}
+              selectedValue={sortOption}
+              onValueChange={(itemValue) => setSortOption(itemValue)}
+            >
+              {
+                sortOptions.map((option, index) => {
+                  return (
+                    <Picker.Item
+                      key={index}
+                      label={option}
+                      value={option}
+                    />
+                  )
+                })
+              }
+            </Picker>
+          </View>
         </View>
 
       </View >

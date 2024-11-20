@@ -1,11 +1,12 @@
 import { View, FlatList, ActivityIndicator } from 'react-native';
-import { searchPageStyles, searchbarStyles, buttonStyles } from '../../styles/SearchPageStyles';
+import { searchPageStyles } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
 import { Searchbar, IconButton } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
 import { SearchGame, SearchPageProps } from '../../interfaces/interfaces';
 import SearchCard from './SearchCard';
 import { ListEmptyComponent } from '../../constants/constants';
+import { searchbarStyles, buttonStyles } from '../../styles/SharedStyles';
 
 const SearchPage = ({ navigation }: SearchPageProps) => {
 

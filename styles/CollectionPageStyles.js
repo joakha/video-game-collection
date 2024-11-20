@@ -9,11 +9,12 @@ export const collectionPageStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
   inputView: {
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: 8,
+    marginTop: 8,
     flexDirection: "row",
     gap: 15,
     alignItems: "center",
+    justifyContent: "center"
   },
   flatlistView: {
     flex: 1,

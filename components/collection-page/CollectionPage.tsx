@@ -2,10 +2,10 @@ import { View, FlatList, ActivityIndicator } from 'react-native';
 import { collectionPageStyles, collectionFilterPickerStyles, collectionSortPickerStyles } from '../../styles/CollectionPageStyles';
 import CollectionCard from './CollectionCard';
 import { useState, useEffect } from 'react';
-import { CollectionGame, CollectionPageProps, FilterOptions } from '../../interfaces/interfaces';
+import { CollectionGame, CollectionPageProps, FilterOptions } from '../../types/types';
 import { Picker } from '@react-native-picker/picker';
 import { ListEmptyComponent } from '../../constants/constants';
-import { PaperProvider, Searchbar } from 'react-native-paper';
+import { Portal, Searchbar } from 'react-native-paper';
 import useGame from '../../hooks/useGame';
 import { searchbarStyles } from '../../styles/SharedStyles';
 
@@ -43,7 +43,7 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
     let gameCollection = [...myGames];
 
-    if (keyword !== "") gameCollection = gameCollection.filter(game => game.name.toLowerCase().includes(keyword));
+    if (keyword.trim() !== "") gameCollection = gameCollection.filter(game => game.name.toLowerCase().includes(keyword.toLowerCase()));
     if (filterOption !== "All" && filterOption !== "Favorites") gameCollection = gameCollection.filter(game => game.status === filterOption);
     if (filterOption === "Favorites") gameCollection = gameCollection.filter(game => game.isFavorite === true);
 
@@ -76,7 +76,7 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
   }
 
   return (
-    <PaperProvider>
+    <Portal.Host>
       <View style={collectionPageStyles.body}>
 
         <View style={collectionPageStyles.flatlistView}>
@@ -97,20 +97,6 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
         </View>
 
         <View>
-          <View style={collectionPageStyles.inputView}>
-            <Searchbar
-              placeholder="Type a game title"
-              onChangeText={setKeyword}
-              value={keyword}
-              style={searchbarStyles.style}
-              inputStyle={searchbarStyles.inputStyle}
-              placeholderTextColor={searchbarStyles.placeholderTextColor}
-              selectionColor={searchbarStyles.selectionColor}
-              iconColor={searchbarStyles.iconColor}
-              icon={searchbarStyles.icon}
-            />
-          </View>
-
           <View style={collectionPageStyles.inputView}>
             <Picker
               style={collectionFilterPickerStyles}
@@ -149,10 +135,24 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
               }
             </Picker>
           </View>
+
+          <View style={collectionPageStyles.inputView}>
+            <Searchbar
+              placeholder="Type a game title"
+              onChangeText={setKeyword}
+              value={keyword}
+              style={searchbarStyles.style}
+              inputStyle={searchbarStyles.inputStyle}
+              placeholderTextColor={searchbarStyles.placeholderTextColor}
+              selectionColor={searchbarStyles.selectionColor}
+              iconColor={searchbarStyles.iconColor}
+              icon={searchbarStyles.icon}
+            />
+          </View>
         </View>
 
       </View >
-    </PaperProvider>
+    </Portal.Host>
   );
 }
 

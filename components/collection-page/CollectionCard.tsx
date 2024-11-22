@@ -1,17 +1,19 @@
 import { Card, Text, IconButton } from 'react-native-paper';
-import { collectionPageStyles } from '../../styles/CollectionPageStyles';
+import { collectionPageStyles, collectionCardPickerStyles } from '../../styles/CollectionPageStyles';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, remove, update } from "firebase/database";
-import { CollectionCardProps, StatusOptions } from '../../interfaces/interfaces';
+import { CollectionCardProps, StatusOptions } from '../../types/types';
 import { Picker } from '@react-native-picker/picker';
 import { Alert, View } from 'react-native';
-import { useState } from 'react';
-import { collectionCardPickerStyles } from '../../styles/CollectionPageStyles';
+import { useEffect, useState } from 'react';
 import ReviewModal from './ReviewModal';
+import ArtWorkModal from './ArtworkModal';
+import { placeholderImage } from '../../constants/constants';
 
 const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
 
     const [gameStatus, setGameStatus] = useState(game.status);
+    const [imageError, setImageError] = useState(false);
 
     const gameStatusOptions: StatusOptions = {
         green: "Playing",
@@ -20,6 +22,10 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
         red: "Dropped",
         grey: "Planned"
     };
+
+    useEffect(() => {
+        setImageError(false);
+    }, [game.backgroundImage])
 
     const toggleFavorite = () => {
         update(ref(database, `myGames/${game.firebaseId}`), { isFavorite: !game.isFavorite });
@@ -48,7 +54,10 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
             onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}
             style={collectionPageStyles.collectionCard}
         >
-            <Card.Cover source={game.backgroundImage ? { uri: game.backgroundImage } : collectionPageStyles.collectionCard.placeholderImage} />
+            <Card.Cover
+                source={imageError ? placeholderImage : { uri: game.backgroundImage }}
+                onError={() => setImageError(true)}
+            />
             <Card.Title
                 title={game.name} titleVariant='titleLarge'
                 subtitle={game.released?.split("-")[0]}
@@ -56,16 +65,17 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
             <Card.Content>
                 <View style={collectionPageStyles.collectionCardContent}>
                     <View>
-                        <Text variant="bodyLarge">{game.genres}</Text>
+                        <Text variant="bodyLarge">{game.genres.length >= 24 ? `${game.genres.slice(0, 24)}...` : game.genres}</Text>
                         <Text variant="bodyMedium">{game.parentPlatform}</Text>
                     </View>
-                    <View>
-                        <IconButton
-                            icon={game.isFavorite ? "star" : "star-outline"}
-                            onPress={toggleFavorite}
-                            iconColor='cyan'
-                        />
-                    </View>
+                    <ArtWorkModal
+                        game={game}
+                    />
+                    <IconButton
+                        icon={game.isFavorite ? "star" : "star-outline"}
+                        onPress={toggleFavorite}
+                        iconColor='cyan'
+                    />
                 </View>
             </Card.Content>
             <Card.Actions>

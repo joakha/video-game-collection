@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Modal, Portal, Text, Button, TextInput } from 'react-native-paper';
-import { reviewModalStyles } from '../../styles/CollectionPageStyles';
+import { reviewModalStyles } from '../../styles/ReviewModalStyles';
 import { View } from 'react-native';
-import { ReviewModalProps } from '../../interfaces/interfaces';
+import { ReviewModalProps } from '../../types/types';
 import { Picker } from '@react-native-picker/picker';
-import { modalPickerStyles } from '../../styles/CollectionPageStyles';
+import { modalPickerStyles } from '../../styles/ReviewModalStyles';
 import { ref, update } from 'firebase/database';
 import { database } from '../../firebase/firebaseConfig';
 import { Alert } from 'react-native';
@@ -37,22 +37,22 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
                 <Modal
                     visible={visible}
                     onDismiss={hide}
-                    style={{ alignItems: "center" }}
-                    contentContainerStyle={reviewModalStyles.modalBody}
+                    style={reviewModalStyles.modalStyle}
+                    contentContainerStyle={reviewModalStyles.contentContainer}
                 >
                     <View style={reviewModalStyles.contentBody}>
                         
-                        <View style={{ height: 250, marginLeft: 20, marginRight: 20 }}>
+                        <View style={reviewModalStyles.textInput}>
                             <Text style={reviewModalStyles.headerText}>Your Review for {game.name}</Text>
                             <TextInput
                                 multiline
-                                placeholder="Write your review"
+                                placeholder="Write your review..."
                                 value={review}
                                 onChangeText={text => setReview(text)}
                             />
                         </View>
 
-                        <View style={{ alignItems: "center" }}>
+                        <View style={reviewModalStyles.scoreView}>
                             <Text>Your review score:</Text>
                             <Picker
                                 style={modalPickerStyles}

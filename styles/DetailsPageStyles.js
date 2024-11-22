@@ -14,7 +14,6 @@ export const detailsPageStyles = StyleSheet.create({
       width: 350,
       height: 350,
       borderRadius: 5,
-      placeholderImage: require('../assets/placeholder-image.svg')
     },
     headerText: {
       color: "white",

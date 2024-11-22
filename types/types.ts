@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 
-//interfaces for SearchPage
-export interface SearchGame {
+//types for SearchPage
+export type SearchGame = {
     gameId: number,
     name: string,
     released: string,
@@ -10,18 +10,18 @@ export interface SearchGame {
     genres: string
 }
 
-export interface SearchPageProps {
+export type SearchPageProps = {
     navigation: any
 }
 
-//interfaces for SearchCard
-export interface SearchCardProps {
+//types for SearchCard
+export type SearchCardProps = {
     game: SearchGame,
     navigation: any
 }
 
-//interfaces for CollectionPage
-export interface CollectionGame {
+//types for CollectionPage
+export type CollectionGame = {
     gameId: number,
     name: string,
     released: string,
@@ -32,23 +32,11 @@ export interface CollectionGame {
     status: string,
     review: string,
     reviewScore: string,
+    defaultImage: string
     firebaseId: string
 }
 
-export interface MyGame {
-    gameId: number,
-    name: string,
-    released: string,
-    backgroundImage: string,
-    parentPlatform: string,
-    genres: string,
-    isFavorite: boolean,
-    status: string,
-    review: string,
-    reviewScore: string
-}
-
-export interface FilterOptions {
+export type FilterOptions = {
     cyan: string,
     black: string,
     green: string,
@@ -58,17 +46,17 @@ export interface FilterOptions {
     grey: string,
 }
 
-export interface CollectionPageProps {
+export type CollectionPageProps = {
     navigation: any
 }
 
-//interfaces for CollectionCard
-export interface CollectionCardProps {
+//types for CollectionCard
+export type CollectionCardProps = {
     game: CollectionGame,
     navigation: any
 }
 
-export interface StatusOptions {
+export type StatusOptions = {
     green: string,
     blue: string,
     orange: string,
@@ -76,13 +64,13 @@ export interface StatusOptions {
     grey: string
 }
 
-//interfaces for ReviewModal
-export interface ReviewModalProps {
+//types for ReviewModal
+export type ReviewModalProps = {
     game: CollectionGame
 }
 
-//interfaces for DetailsPage
-export interface GameDetails {
+//types for DetailsPage
+export type GameDetails = {
     name: string,
     released: string,
     backgroundImageAdditional: string,
@@ -94,23 +82,43 @@ export interface GameDetails {
     descriptionRaw: string,
 }
 
-export interface DetailsPageProps {
+export type DetailsPageProps = {
     route: any
 }
 
-//interfaces for statistics page
-export interface PieData {
+//types for statistics page
+export type PieData = {
     value: number,
     color?: string,
     text: string
 }
 
-//interfaces for GameContext
-export interface GameContextType {
+//types for GameContext and GameProvider
+
+export type MyGame = {
+    gameId: number,
+    name: string,
+    released: string,
+    backgroundImage: string,
+    parentPlatform: string,
+    genres: string,
+    isFavorite: boolean,
+    status: string,
+    review: string,
+    reviewScore: string,
+    defaultImage: string
+}
+
+export type GameContextType = {
     loadingMyGames: boolean,
     myGames: CollectionGame[],
 }
 
-export interface GameProviderType {
+export type GameProviderType = {
     children: ReactNode
+}
+
+//types for artwork modal
+export type ArtworkModalProps = {
+    game: CollectionGame
 }

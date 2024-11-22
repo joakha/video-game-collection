@@ -3,7 +3,7 @@ import { searchPageStyles } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
 import { Searchbar, IconButton } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
-import { SearchGame, SearchPageProps } from '../../interfaces/interfaces';
+import { SearchGame, SearchPageProps } from '../../types/types';
 import SearchCard from './SearchCard';
 import { ListEmptyComponent } from '../../constants/constants';
 import { searchbarStyles, buttonStyles } from '../../styles/SharedStyles';

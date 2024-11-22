@@ -1,5 +1,5 @@
 import { Card, Text, Button, IconButton } from 'react-native-paper';
-import { SearchCardProps } from '../../interfaces/interfaces';
+import { SearchCardProps } from '../../types/types';
 import { searchPageStyles } from '../../styles/SearchPageStyles';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, push } from "firebase/database";
@@ -13,7 +13,7 @@ const SearchCard = ({ game, navigation }: SearchCardProps) => {
     const gameInCollection: boolean = myGames.some(collectionGame => collectionGame.gameId === game.gameId);
 
     const addToCollection = () => {
-        push(ref(database, 'myGames/'), { ...game, status: "Planned", review: "", reviewScore: 0, isFavorite: false });
+        push(ref(database, 'myGames/'), { ...game, status: "Planned", review: "", reviewScore: 0, isFavorite: false, defaultImage: game.backgroundImage });
         Alert.alert("Added", `${game.name} has been added to your game collection!`);
     }
 

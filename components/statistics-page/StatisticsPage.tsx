@@ -2,7 +2,7 @@ import { statisticsStyles } from '../../styles/StatisticsPageStyles';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { useState, useEffect } from 'react';
 import { PieChart } from "react-native-gifted-charts";
-import { PieData } from '../../interfaces/interfaces';
+import { PieData } from '../../types/types';
 import useGame from '../../hooks/useGame';
 
 const StatisticsPage = () => {

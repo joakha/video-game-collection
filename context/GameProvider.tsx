@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import { ref, onValue } from 'firebase/database';
-import { MyGame, CollectionGame } from "../interfaces/interfaces";
+import { MyGame, CollectionGame } from "../types/types";
 import { database } from "../firebase/firebaseConfig";
-import { GameContextType, GameProviderType } from "../interfaces/interfaces";
+import { GameContextType, GameProviderType } from "../types/types";
 
 const initialGameContext: GameContextType = {
   loadingMyGames: false,

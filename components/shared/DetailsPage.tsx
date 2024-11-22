@@ -2,7 +2,8 @@ import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native"
 import { detailsPageStyles } from "../../styles/DetailsPageStyles";
 import { useState, useEffect } from "react";
 import { apiURL, apiKey } from "../../constants/constants";
-import { GameDetails, DetailsPageProps } from "../../interfaces/interfaces";
+import { GameDetails, DetailsPageProps } from "../../types/types";
+import { placeholderImage } from "../../constants/constants";
 
 const DetailsPage = ({ route }: DetailsPageProps) => {
 
@@ -83,7 +84,7 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
                 ) : (
                     <View style={detailsPageStyles.detailsView}>
                         <Image
-                            source={gameDetails.backgroundImageAdditional ? { uri: gameDetails.backgroundImageAdditional } : detailsPageStyles.image.placeholderImage}
+                            source={gameDetails.backgroundImageAdditional ? { uri: gameDetails.backgroundImageAdditional } : placeholderImage}
                             style={detailsPageStyles.image}
                         />
                         <Text style={detailsPageStyles.headerText}>{gameDetails.name}</Text>

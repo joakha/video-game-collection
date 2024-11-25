@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Modal, Portal, Text, Button } from 'react-native-paper';
 import { artworkModalStyles, artworkButtonProps } from '../../styles/ArtworkModalStyles';
-import { View, Image } from 'react-native';
+import { View, Image, Alert } from 'react-native';
 import { ArtworkModalProps } from '../../types/types';
 import * as ImagePicker from 'expo-image-picker';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, update } from 'firebase/database';
-import { Alert } from 'react-native';
 import { placeholderImage } from '../../constants/constants';
 
 const ArtWorkModal = ({ game }: ArtworkModalProps) => {

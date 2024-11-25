@@ -14,30 +14,48 @@ export const searchPageStyles = StyleSheet.create({
   },
   flatlistView: {
     flex: 1,
-    width: "100%",
-    alignItems: "center",
     marginTop: 30,
+    marginLeft: 10
   },
   searchCard: {
-    width: 325,
+    width: 175,
     height: 375,
-    marginBottom: 10,
-    placeholderImage: require('../assets/placeholder-image.svg')
+    marginBottom: 30,
+    marginRight: 10,
+  },
+  inCollectionText: {
+    fontSize: 12
+  },
+  searchButton: {
+    justifyContent: "center"
+  },
+  paginationButton: {
+    width: 40
   },
   inputView: {
     marginBottom: 15,
     marginTop: 15,
-    flexDirection: "column",
     gap: 10,
   },
-  paginationView : {
+  paginationView: {
     flexDirection: "row",
     gap: 10,
-    justifyContent: "space-between"
+    justifyContent: "space-evenly",
+  },
+  placeHolderView: {
+    width: 52
   },
   searchView: {
     flexDirection: "row",
     gap: 10,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    width: "78%"
   },
 });
+
+export const searchButtonProps = {
+  buttonColor: "#77dd77",
+  buttonSize: 35,
+  textColor: "white"
+}

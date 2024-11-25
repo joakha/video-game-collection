@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { Modal, Portal, Text, Button, TextInput } from 'react-native-paper';
-import { reviewModalStyles } from '../../styles/ReviewModalStyles';
-import { View } from 'react-native';
+import { reviewModalStyles, modalPickerStyles } from '../../styles/ReviewModalStyles';
+import { View, Alert } from 'react-native';
 import { ReviewModalProps } from '../../types/types';
 import { Picker } from '@react-native-picker/picker';
-import { modalPickerStyles } from '../../styles/ReviewModalStyles';
 import { ref, update } from 'firebase/database';
 import { database } from '../../firebase/firebaseConfig';
-import { Alert } from 'react-native';
 
 const ReviewModal = ({ game }: ReviewModalProps) => {
 

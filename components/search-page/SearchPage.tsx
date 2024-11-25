@@ -1,7 +1,7 @@
-import { View, FlatList, ActivityIndicator } from 'react-native';
-import { searchPageStyles } from '../../styles/SearchPageStyles';
+import { View, FlatList, ActivityIndicator, Alert } from 'react-native';
+import { searchPageStyles, searchButtonProps } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
-import { Searchbar, IconButton } from 'react-native-paper';
+import { Searchbar, IconButton, Button } from 'react-native-paper';
 import { apiURL, apiKey } from '../../constants/constants';
 import { SearchGame, SearchPageProps } from '../../types/types';
 import SearchCard from './SearchCard';
@@ -18,7 +18,41 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
 
   const defaultSearchString: string = `${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`;
 
-  const fetchGames = async (searchString: string) => {
+  const fetchTrendingGames = async () => {
+    //period for trending games will be the last month
+    //current date
+    const currentDate = new Date();
+    //formatted string for current date
+    const currentDateString = currentDate.toISOString().split("T")[0];
+    //date a month ago
+    const currentDateMonthAgo = new Date();
+    currentDateMonthAgo.setMonth(currentDate.getMonth() - 1);
+    //formatted string for date a month ago
+    const previousMonthString = currentDateMonthAgo.toISOString().split("T")[0];
+
+    try {
+      setLoadingSearch(true);
+      const response = await fetch(`https://api.rawg.io/api/games?dates=${previousMonthString},${currentDateString}&ordering=-added&key=${apiKey}`);
+      if (!response.ok) throw new Error("Issue fetching game(s) data!")
+
+      const gamesData = await response.json();
+      let formattedData: SearchGame[] = [];
+
+      if (gamesData.results) {
+        formattedData = formatFetchData(gamesData);
+      }
+
+      setSearchGames(formattedData);
+      setNextPage(gamesData.next);
+      setPreviousPage(gamesData.previous);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingSearch(false);
+    }
+  }
+
+  const fetchGamesWithKeyword = async (searchString: string) => {
     try {
       setLoadingSearch(true);
       const response = await fetch(searchString);
@@ -34,7 +68,6 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
       setSearchGames(formattedData);
       setNextPage(gamesData.next);
       setPreviousPage(gamesData.previous);
-      setGameKeyword("");
     } catch (err) {
       console.error(err);
     } finally {
@@ -77,6 +110,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             <FlatList
               data={searchGames}
               ListEmptyComponent={ListEmptyComponent}
+              numColumns={2}
               renderItem={({ item }) => {
                 return <SearchCard game={item} navigation={navigation} />
               }}
@@ -95,12 +129,28 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
                 icon="arrow-left"
                 iconColor={buttonStyles.iconColor}
                 containerColor={buttonStyles.containerColor}
-                onPress={() => loadingSearch === false && fetchGames(previousPage)}
+                onPress={() => loadingSearch === false && fetchGamesWithKeyword(previousPage)}
+                style={searchPageStyles.paginationButton}
               />
             ) : (
-              <View />
+              <View style={searchPageStyles.placeHolderView} />
             )
           }
+          <Button
+            textColor={searchButtonProps.textColor}
+            buttonColor={searchButtonProps.buttonColor}
+            style={searchPageStyles.searchButton}
+            onPress={() => loadingSearch === false && fetchTrendingGames()}
+          >
+            Trending
+          </Button>
+          <Button
+            textColor={searchButtonProps.textColor}
+            buttonColor={searchButtonProps.buttonColor}
+            style={searchPageStyles.searchButton}
+          >
+            Upcoming
+          </Button>
           {
             //render button for pagination or render empty placeholder view so that possibly existing pagination button maintains correct placement
             nextPage ? (
@@ -108,10 +158,11 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
                 icon="arrow-right"
                 iconColor={buttonStyles.iconColor}
                 containerColor={buttonStyles.containerColor}
-                onPress={() => loadingSearch === false && fetchGames(nextPage)}
+                onPress={() => loadingSearch === false && fetchGamesWithKeyword(nextPage)}
+                style={searchPageStyles.paginationButton}
               />
             ) : (
-              <View />
+              <View style={searchPageStyles.placeHolderView} />
             )
           }
         </View>
@@ -133,7 +184,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             icon="search-web"
             iconColor={buttonStyles.iconColor}
             containerColor={buttonStyles.containerColor}
-            onPress={() => loadingSearch === false && fetchGames(defaultSearchString)}
+            onPress={() => loadingSearch === false && fetchGamesWithKeyword(defaultSearchString)}
           />
         </View>
 

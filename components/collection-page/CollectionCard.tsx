@@ -68,9 +68,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                         <Text variant="bodyLarge">{game.genres.length >= 24 ? `${game.genres.slice(0, 24)}...` : game.genres}</Text>
                         <Text variant="bodyMedium">{game.parentPlatform}</Text>
                     </View>
-                    <ArtWorkModal
-                        game={game}
-                    />
+                    <ArtWorkModal game={game} />
                     <IconButton
                         icon={game.isFavorite ? "star" : "star-outline"}
                         onPress={toggleFavorite}

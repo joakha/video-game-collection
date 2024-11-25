@@ -5,6 +5,7 @@ import { database } from '../../firebase/firebaseConfig';
 import { ref, push } from "firebase/database";
 import { Alert } from 'react-native';
 import useGame from '../../hooks/useGame';
+import { placeholderImage } from '../../constants/constants';
 
 const SearchCard = ({ game, navigation }: SearchCardProps) => {
 
@@ -22,20 +23,20 @@ const SearchCard = ({ game, navigation }: SearchCardProps) => {
             onPress={() => navigation.navigate("Game Details", { gameId: game.gameId })}
             style={searchPageStyles.searchCard}
         >
-            <Card.Cover source={game.backgroundImage ? { uri: game.backgroundImage } : searchPageStyles.searchCard.placeholderImage} />
+            <Card.Cover source={game.backgroundImage ? { uri: game.backgroundImage } : placeholderImage} />
             <Card.Title
-                title={game.name} titleVariant='titleLarge'
+                title={game.name} titleVariant='titleSmall'
                 subtitle={game.released?.split("-")[0]}
             />
             <Card.Content>
-                <Text variant="bodyLarge">{game.genres}</Text>
-                <Text variant="bodyMedium">{game.parentPlatform}</Text>
+                <Text variant="bodySmall">{game.genres}</Text>
+                <Text variant="bodySmall">{game.parentPlatform}</Text>
             </Card.Content>
             <Card.Actions>
                 {
                     gameInCollection ? (
                         <>
-                            <Text>Game in Collection</Text>
+                            <Text style={searchPageStyles.inCollectionText}>Game in Collection</Text>
                             <IconButton icon="check" iconColor='green' />
                         </>
                     ) : (

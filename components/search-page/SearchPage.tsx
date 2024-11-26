@@ -1,4 +1,4 @@
-import { View, FlatList, ActivityIndicator, Alert } from 'react-native';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 import { searchPageStyles, searchButtonProps } from '../../styles/SearchPageStyles';
 import { useState } from 'react';
 import { Searchbar, IconButton, Button } from 'react-native-paper';
@@ -17,6 +17,40 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
   const [previousPage, setPreviousPage] = useState<string>("");
 
   const defaultSearchString: string = `${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`;
+
+  const fetchUpcomingGames = async () => {
+    //period for upcoming games will be the next three months
+    //current date
+    const currentDate = new Date();
+    //formatted string for current date
+    const currentDateString = currentDate.toISOString().split("T")[0];
+    //date 3 months from now
+    const dateThreeMonthsFromNow = new Date();
+    dateThreeMonthsFromNow.setMonth(currentDate.getMonth() + 3);
+    //formatted string for date 3 months from now
+    const dateThreeMonthsFromNowString = dateThreeMonthsFromNow.toISOString().split("T")[0];
+
+    try {
+      setLoadingSearch(true);
+      const response = await fetch(`https://api.rawg.io/api/games?dates=${currentDateString},${dateThreeMonthsFromNowString}&ordering=-added&key=${apiKey}`);
+      if (!response.ok) throw new Error("Issue fetching game(s) data!")
+
+      const gamesData = await response.json();
+      let formattedData: SearchGame[] = [];
+
+      if (gamesData.results) {
+        formattedData = formatFetchData(gamesData);
+      }
+
+      setSearchGames(formattedData);
+      setNextPage(gamesData.next);
+      setPreviousPage(gamesData.previous);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingSearch(false);
+    }
+  }
 
   const fetchTrendingGames = async () => {
     //period for trending games will be the last month
@@ -148,6 +182,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             textColor={searchButtonProps.textColor}
             buttonColor={searchButtonProps.buttonColor}
             style={searchPageStyles.searchButton}
+            onPress={() => loadingSearch === false && fetchUpcomingGames()}
           >
             Upcoming
           </Button>

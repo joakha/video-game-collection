@@ -7,7 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import { Alert, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import ReviewModal from './ReviewModal';
-import ArtWorkModal from './ArtworkModal';
+import ArtworkModal from './ArtworkModal';
 import { placeholderImage } from '../../constants/constants';
 
 const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
@@ -68,7 +68,7 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                         <Text variant="bodyLarge">{game.genres.length >= 24 ? `${game.genres.slice(0, 24)}...` : game.genres}</Text>
                         <Text variant="bodyMedium">{game.parentPlatform}</Text>
                     </View>
-                    <ArtWorkModal game={game} />
+                    <ArtworkModal game={game} />
                     <IconButton
                         icon={game.isFavorite ? "star" : "star-outline"}
                         onPress={toggleFavorite}

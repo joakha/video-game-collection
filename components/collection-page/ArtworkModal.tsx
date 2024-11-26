@@ -8,7 +8,7 @@ import { database } from '../../firebase/firebaseConfig';
 import { ref, update } from 'firebase/database';
 import { placeholderImage } from '../../constants/constants';
 
-const ArtWorkModal = ({ game }: ArtworkModalProps) => {
+const ArtworkModal = ({ game }: ArtworkModalProps) => {
 
     const [visible, setVisible] = useState<boolean>(false);
     const [coverArt, setCoverArt] = useState<string>(game.backgroundImage);
@@ -108,4 +108,4 @@ const ArtWorkModal = ({ game }: ArtworkModalProps) => {
     )
 }
 
-export default ArtWorkModal
+export default ArtworkModal

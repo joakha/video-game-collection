@@ -95,7 +95,7 @@ export type PieData = {
 
 //types for GameContext and GameProvider
 
-export type MyGame = {
+export type FirebaseGame = {
     gameId: number,
     name: string,
     released: string,
@@ -110,8 +110,8 @@ export type MyGame = {
 }
 
 export type GameContextType = {
-    loadingMyGames: boolean,
-    myGames: CollectionGame[],
+    loadingGames: boolean,
+    firebaseGamesWithKeys: CollectionGame[],
 }
 
 export type GameProviderType = {

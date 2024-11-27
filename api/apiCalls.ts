@@ -78,6 +78,4 @@ const fetchGameDetails = async (gameId: number) => {
     }
 }
 
-
-
 export { fetchKeywordGames, fetchUpcomingGamesData, fetchTrendingGamesData, fetchGameDetails }

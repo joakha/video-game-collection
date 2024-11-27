@@ -9,9 +9,9 @@ import { placeholderImage } from '../../constants/constants';
 
 const SearchCard = ({ game, navigation }: SearchCardProps) => {
 
-    const { myGames } = useGame();
+    const { firebaseGamesWithKeys } = useGame();
 
-    const gameInCollection: boolean = myGames.some(collectionGame => collectionGame.gameId === game.gameId);
+    const gameInCollection: boolean = firebaseGamesWithKeys.some(firebaseGame => firebaseGame.gameId === game.gameId);
 
     const addToCollection = () => {
         push(ref(database, 'myGames/'), { ...game, status: "Planned", review: "", reviewScore: 0, isFavorite: false, defaultImage: game.backgroundImage });

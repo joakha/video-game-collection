@@ -11,7 +11,7 @@ import { searchbarStyles } from '../../styles/SharedStyles';
 
 const CollectionPage = ({ navigation }: CollectionPageProps) => {
 
-  const { loadingMyGames, myGames } = useGame();
+  const { loadingGames, firebaseGamesWithKeys } = useGame();
 
   const [sortedFilteredGames, setSortedFilteredGames] = useState<CollectionGame[]>([]);
   const [sortOption, setSortOption] = useState<string>("A-Z");
@@ -29,19 +29,9 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
     grey: "Planned",
   };
 
-  useEffect(() => {
-    if (myGames.length > 0) {
-      updateCollection();
-    } else {
-      setFilterOption("All");
-      setSortOption("A-Z");
-      setSortedFilteredGames([]);
-    }
-  }, [myGames, filterOption, sortOption, keyword])
-
   const updateCollection = () => {
 
-    let gameCollection = [...myGames];
+    let gameCollection = [...firebaseGamesWithKeys];
 
     if (keyword.trim() !== "") gameCollection = gameCollection.filter(game => game.name.toLowerCase().includes(keyword.toLowerCase()));
     if (filterOption !== "All" && filterOption !== "Favorites") gameCollection = gameCollection.filter(game => game.status === filterOption);
@@ -75,13 +65,23 @@ const CollectionPage = ({ navigation }: CollectionPageProps) => {
     setSortedFilteredGames(gameCollection);
   }
 
+  useEffect(() => {
+    if (firebaseGamesWithKeys.length > 0) {
+      updateCollection();
+    } else {
+      setFilterOption("All");
+      setSortOption("A-Z");
+      setSortedFilteredGames([]);
+    }
+  }, [firebaseGamesWithKeys, filterOption, sortOption, keyword])
+
   return (
     <Portal.Host>
       <View style={collectionPageStyles.body}>
 
         <View style={collectionPageStyles.flatlistView}>
           {
-            loadingMyGames ? (
+            loadingGames ? (
               <ActivityIndicator size='large' />
             ) : (
               <FlatList

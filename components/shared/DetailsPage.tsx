@@ -1,8 +1,9 @@
 import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native"
 import { detailsPageStyles } from "../../styles/DetailsPageStyles";
 import { useState, useEffect } from "react";
-import { apiURL, apiKey, placeholderImage } from "../../constants/constants";
+import { placeholderImage } from "../../constants/constants";
 import { GameDetails, DetailsPageProps } from "../../types/types";
+import { fetchGameDetails } from "../../api/apiCalls";
 
 const DetailsPage = ({ route }: DetailsPageProps) => {
 
@@ -20,11 +21,10 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
         descriptionRaw: ""
     });
 
-    const fetchGameDetails = async () => {
+    const getGameDetails = async () => {
         try {
             setLoadingDetails(true);
-            const response = await fetch(`${apiURL}/games/${gameId}?key=${apiKey}`);
-            const gameData = await response.json();
+            const detailsData = await fetchGameDetails(gameId);
             let formattedData: GameDetails = {
                 name: "",
                 released: "",
@@ -37,8 +37,8 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
                 descriptionRaw: ""
             };
 
-            if (gameData.detail !== "Not found.") {
-                formattedData = formatFetchData(gameData);
+            if (detailsData.detail !== "Not found.") {
+                formattedData = formatDetailsData(detailsData);
             }
 
             setGameDetails(formattedData);
@@ -50,29 +50,29 @@ const DetailsPage = ({ route }: DetailsPageProps) => {
     }
 
     //received json is complicated so it is formatted here for ease of use later
-    const formatFetchData = (gameData: any): GameDetails => {
-        const platforms: string = gameData.platforms?.map((platform: any) => platform.platform.name).join(", ");
-        const stores: string = gameData.stores?.map((store: any) => store.store.domain).join(", ");
+    const formatDetailsData = (detailsData: any): GameDetails => {
+        const platforms: string = detailsData.platforms?.map((platform: any) => platform.platform.name).join(", ");
+        const stores: string = detailsData.stores?.map((store: any) => store.store.domain).join(", ");
 
-        const developers: string = gameData.developers?.map((developer: any) => developer.name).join(", ");
-        const tags: string = gameData.tags?.map((tag: any) => tag.name).join(", ");
-        const publishers: string = gameData.publishers?.map((publisher: any) => publisher.name).join(", ");
+        const developers: string = detailsData.developers?.map((developer: any) => developer.name).join(", ");
+        const tags: string = detailsData.tags?.map((tag: any) => tag.name).join(", ");
+        const publishers: string = detailsData.publishers?.map((publisher: any) => publisher.name).join(", ");
 
         return {
-            name: gameData.name,
-            released: gameData.released,
-            backgroundImageAdditional: gameData.background_image_additional,
+            name: detailsData.name,
+            released: detailsData.released,
+            backgroundImageAdditional: detailsData.background_image_additional,
             platforms: platforms,
             stores: stores,
             developers: developers,
             tags: tags,
             publishers: publishers,
-            descriptionRaw: gameData.description_raw
+            descriptionRaw: detailsData.description_raw
         }
     }
 
     useEffect(() => {
-        fetchGameDetails();
+        getGameDetails();
     }, []);
 
     return (

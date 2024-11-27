@@ -7,6 +7,7 @@ import { SearchGame, SearchPageProps } from '../../types/types';
 import SearchCard from './SearchCard';
 import { ListEmptyComponent } from '../../constants/constants';
 import { searchbarStyles, buttonStyles } from '../../styles/SharedStyles';
+import { fetchUpcomingGamesData, fetchTrendingGamesData, fetchKeywordGames } from '../../api/apiCalls';
 
 const SearchPage = ({ navigation }: SearchPageProps) => {
 
@@ -16,35 +17,28 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
   const [nextPage, setNextPage] = useState<string>("");
   const [previousPage, setPreviousPage] = useState<string>("");
 
-  const defaultSearchString: string = `${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`;
+  const defaultKeywordSearchString: string = `${apiURL}/games?key=${apiKey}&search=${gameKeyword}&search_exact=true&ordering=-rating`;
 
-  const fetchUpcomingGames = async () => {
-    //period for upcoming games will be the next three months
-    //current date
-    const currentDate = new Date();
-    //formatted string for current date
-    const currentDateString = currentDate.toISOString().split("T")[0];
-    //date 3 months from now
-    const dateThreeMonthsFromNow = new Date();
-    dateThreeMonthsFromNow.setMonth(currentDate.getMonth() + 3);
-    //formatted string for date 3 months from now
-    const dateThreeMonthsFromNowString = dateThreeMonthsFromNow.toISOString().split("T")[0];
-
+  const getTrendingOrUpcomingGames = async (option: string) => {
     try {
       setLoadingSearch(true);
-      const response = await fetch(`https://api.rawg.io/api/games?dates=${currentDateString},${dateThreeMonthsFromNowString}&ordering=-added&key=${apiKey}`);
-      if (!response.ok) throw new Error("Issue fetching game(s) data!")
+      let searchData = [];
 
-      const gamesData = await response.json();
+      if (option === "trending") {
+        searchData = await fetchTrendingGamesData();
+      } else {
+        searchData = await fetchUpcomingGamesData();
+      }
+
       let formattedData: SearchGame[] = [];
 
-      if (gamesData.results) {
-        formattedData = formatFetchData(gamesData);
+      if (searchData.results) {
+        formattedData = formatSearchData(searchData);
       }
 
       setSearchGames(formattedData);
-      setNextPage(gamesData.next);
-      setPreviousPage(gamesData.previous);
+      setNextPage(searchData.next);
+      setPreviousPage(searchData.previous);
     } catch (err) {
       console.error(err);
     } finally {
@@ -52,56 +46,21 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
     }
   }
 
-  const fetchTrendingGames = async () => {
-    //period for trending games will be the last month
-    //current date
-    const currentDate = new Date();
-    //formatted string for current date
-    const currentDateString = currentDate.toISOString().split("T")[0];
-    //date a month ago
-    const currentDateMonthAgo = new Date();
-    currentDateMonthAgo.setMonth(currentDate.getMonth() - 1);
-    //formatted string for date a month ago
-    const previousMonthString = currentDateMonthAgo.toISOString().split("T")[0];
-
+  const getGamesWithKeyword = async (searchString: string) => {
     try {
       setLoadingSearch(true);
-      const response = await fetch(`https://api.rawg.io/api/games?dates=${previousMonthString},${currentDateString}&ordering=-added&key=${apiKey}`);
-      if (!response.ok) throw new Error("Issue fetching game(s) data!")
 
-      const gamesData = await response.json();
+      const searchData = await fetchKeywordGames(searchString);
+
       let formattedData: SearchGame[] = [];
 
-      if (gamesData.results) {
-        formattedData = formatFetchData(gamesData);
+      if (searchData.results) {
+        formattedData = formatSearchData(searchData);
       }
 
       setSearchGames(formattedData);
-      setNextPage(gamesData.next);
-      setPreviousPage(gamesData.previous);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoadingSearch(false);
-    }
-  }
-
-  const fetchGamesWithKeyword = async (searchString: string) => {
-    try {
-      setLoadingSearch(true);
-      const response = await fetch(searchString);
-      if (!response.ok) throw new Error("Issue fetching game(s) data!")
-
-      const gamesData = await response.json();
-      let formattedData: SearchGame[] = [];
-
-      if (gamesData.results) {
-        formattedData = formatFetchData(gamesData);
-      }
-
-      setSearchGames(formattedData);
-      setNextPage(gamesData.next);
-      setPreviousPage(gamesData.previous);
+      setNextPage(searchData.next);
+      setPreviousPage(searchData.previous);
     } catch (err) {
       console.error(err);
     } finally {
@@ -110,11 +69,11 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
   }
 
   //received json is complicated so it is formatted here for ease of use later
-  const formatFetchData = (gamesData: any): SearchGame[] => {
+  const formatSearchData = (searchData: any): SearchGame[] => {
 
     const formattedData: SearchGame[] = [];
 
-    gamesData.results.forEach((game: any) => {
+    searchData.results.forEach((game: any) => {
       const parentPlatform: string = game.parent_platforms?.[0]?.platform?.name || "";
       const genres: string = game.genres?.map((genre: any) => genre.name).join(", ") || "";
 
@@ -163,7 +122,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
                 icon="arrow-left"
                 iconColor={buttonStyles.iconColor}
                 containerColor={buttonStyles.containerColor}
-                onPress={() => loadingSearch === false && fetchGamesWithKeyword(previousPage)}
+                onPress={() => loadingSearch === false && getGamesWithKeyword(previousPage)}
                 style={searchPageStyles.paginationButton}
               />
             ) : (
@@ -174,7 +133,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             textColor={searchButtonProps.textColor}
             buttonColor={searchButtonProps.buttonColor}
             style={searchPageStyles.searchButton}
-            onPress={() => loadingSearch === false && fetchTrendingGames()}
+            onPress={() => loadingSearch === false && getTrendingOrUpcomingGames("trending")}
           >
             Trending
           </Button>
@@ -182,7 +141,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             textColor={searchButtonProps.textColor}
             buttonColor={searchButtonProps.buttonColor}
             style={searchPageStyles.searchButton}
-            onPress={() => loadingSearch === false && fetchUpcomingGames()}
+            onPress={() => loadingSearch === false && getTrendingOrUpcomingGames("upcoming")}
           >
             Upcoming
           </Button>
@@ -193,7 +152,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
                 icon="arrow-right"
                 iconColor={buttonStyles.iconColor}
                 containerColor={buttonStyles.containerColor}
-                onPress={() => loadingSearch === false && fetchGamesWithKeyword(nextPage)}
+                onPress={() => loadingSearch === false && getGamesWithKeyword(nextPage)}
                 style={searchPageStyles.paginationButton}
               />
             ) : (
@@ -219,7 +178,7 @@ const SearchPage = ({ navigation }: SearchPageProps) => {
             icon="search-web"
             iconColor={buttonStyles.iconColor}
             containerColor={buttonStyles.containerColor}
-            onPress={() => loadingSearch === false && fetchGamesWithKeyword(defaultSearchString)}
+            onPress={() => loadingSearch === false && getGamesWithKeyword(defaultKeywordSearchString)}
           />
         </View>
 

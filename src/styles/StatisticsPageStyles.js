@@ -2,20 +2,20 @@ import { StyleSheet } from "react-native";
 
 //styles for statistics page
 export const statisticsStyles = StyleSheet.create({
-  scrollView: {
+  container: {
     backgroundColor: 'gray',
+    flex: 1,
   },
   body: {
+    marginBottom: 30,
     alignItems: 'center',
-    marginBottom: 20,
-    flex: 1,
   },
   headerText: {
     fontWeight: "bold",
     fontSize: 25,
     textAlign: "center",
-    marginTop: 30,
-    marginBottom: 30,
+    marginTop: 15,
+    marginBottom: 15,
     color: "white"
   },
   infoText: {

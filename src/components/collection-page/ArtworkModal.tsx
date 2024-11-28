@@ -127,8 +127,16 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
                             </Button>
                         </View>
                         <View style={artworkModalStyles.exitView}>
-                            <Button onPress={hide}>Exit</Button>
-                            <Button onPress={saveCoverArt}>Save</Button>
+                            <Button
+                                textColor='green'
+                                onPress={hide}
+                            >Exit
+                            </Button>
+                            <Button
+                                onPress={saveCoverArt}
+                                textColor='green'
+                            >Save
+                            </Button>
                         </View>
                     </View>
                 </Modal>

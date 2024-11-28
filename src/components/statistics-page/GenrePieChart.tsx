@@ -47,8 +47,9 @@ const GenrePieChart = () => {
         <PieChart
             showText
             textColor="black"
-            radius={150}
+            radius={125}
             textSize={13}
+            
             data={genreData}
         />
     )

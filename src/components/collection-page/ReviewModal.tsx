@@ -51,6 +51,10 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
                                 placeholder="Write your review..."
                                 value={review}
                                 onChangeText={text => setReview(text)}
+                                style={{backgroundColor: "#77dd77"}}
+                                textColor='white'
+                                cursorColor='white'
+                                placeholderTextColor="white"
                             />
                         </View>
 
@@ -70,8 +74,17 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
                             </Picker>
 
                             <View style={reviewModalStyles.buttonView}>
-                                <Button onPress={hide}>Exit</Button>
-                                <Button onPress={saveReview}>Save</Button>
+                                <Button
+                                    onPress={hide}
+                                    textColor='green'
+                                >
+                                    Exit
+                                </Button>
+                                <Button
+                                    onPress={saveReview}
+                                    textColor='green'
+                                >Save
+                                </Button>
                             </View>
                         </View>
 

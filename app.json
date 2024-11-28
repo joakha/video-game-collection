@@ -29,6 +29,14 @@
         {
           "photosPermission": "This app accesses your photos to let you set custom artwork for the game."
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow this app to access your photos.",
+          "savePhotosPermission": "Allow this app to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
       ]
     ]
   }

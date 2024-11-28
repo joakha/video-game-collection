@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { database } from '../../firebase/firebaseConfig';
 import { ref, update } from 'firebase/database';
 import { placeholderImage } from '../../constants/constants';
+import * as MediaLibrary from 'expo-media-library';
 
 const ArtworkModal = ({ game }: ArtworkModalProps) => {
 
@@ -28,7 +29,6 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
         });
 
         if (!pickerResult.canceled) {
-            console.log(pickerResult.assets[0].uri)
             setCoverArt(pickerResult.assets[0].uri);
         }
     };
@@ -54,9 +54,33 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
         setCoverArt(game.defaultImage);
     }
 
-    const saveCoverArt = () => {
-        update(ref(database, `myGames/${game.firebaseId}`), { backgroundImage: coverArt });
-        hide();
+    const saveCoverArt = async () => {
+
+        if (coverArt === game.backgroundImage) {
+            Alert.alert("Alert!", `You are already using this same cover art!`);
+            return;
+        }
+
+        if (coverArt === game.defaultImage) {
+            update(ref(database, `myGames/${game.firebaseId}`), { backgroundImage: coverArt });
+            hide();
+            return;
+        }
+
+        try {
+            const { status } = await MediaLibrary.requestPermissionsAsync();
+
+            if (status !== "granted") {
+                Alert.alert("Permission Required", "Permission needed to save custom art to phone media library!");
+                return;
+            }
+            const savedCoverArt = await MediaLibrary.createAssetAsync(coverArt);
+            update(ref(database, `myGames/${game.firebaseId}`), { backgroundImage: savedCoverArt.uri });
+            hide();
+        } catch (err) {
+            Alert.alert("Can't save an image that doesnt exist!", `${err}`);
+        }
+
     }
 
     return (

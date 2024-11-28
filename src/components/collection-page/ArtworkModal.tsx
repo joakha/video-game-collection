@@ -56,6 +56,11 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
 
     const saveCoverArt = async () => {
 
+        if (imageError === true) {
+            Alert.alert("Alert!", `Can't save an image that doesn't exist!`);
+            return;
+        }
+
         if (coverArt === game.backgroundImage) {
             Alert.alert("Alert!", `You are already using this same cover art!`);
             return;
@@ -78,7 +83,7 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
             update(ref(database, `myGames/${game.firebaseId}`), { backgroundImage: savedCoverArt.uri });
             hide();
         } catch (err) {
-            Alert.alert("Can't save an image that doesnt exist!", `${err}`);
+            Alert.alert("Error saving image!", `${err}`);
         }
 
     }

@@ -49,7 +49,7 @@ const StatusPieChart = () => {
         <PieChart
             showText
             textColor="black"
-            radius={125}
+            radius={100}
             textSize={13}
             data={statusData}
         />

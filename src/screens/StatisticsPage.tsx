@@ -10,9 +10,9 @@ const StatisticsPage = () => {
   const { loadingGames, firebaseGamesWithKeys } = useGame();
 
   const totalGames = firebaseGamesWithKeys.length;
-  const averageReviewScore = firebaseGamesWithKeys.reduce((prev, curr) => {
+  const averageReviewScore = (firebaseGamesWithKeys.reduce((prev, curr) => {
     return prev + Number(curr.reviewScore)
-  }, 0) / firebaseGamesWithKeys.length;
+  }, 0) / firebaseGamesWithKeys.length).toFixed(1);
 
   return (
     <SafeAreaView style={statisticsStyles.container}>
@@ -28,11 +28,11 @@ const StatisticsPage = () => {
                 <Text style={statisticsStyles.headerText}>Total Number of Games in Collection: <Text style={statisticsStyles.infoText}>{totalGames}</Text></Text>
                 <Text style={statisticsStyles.headerText}>Your Average Review Score: <Text style={statisticsStyles.infoText}>{averageReviewScore}</Text></Text>
               </View>
-              <View>
+              <View style={statisticsStyles.pieView}>
                 <Text style={statisticsStyles.headerText}>Games by Status</Text>
                 <StatusPieChart />
               </View>
-              <View>
+              <View style={statisticsStyles.pieView}>
                 <Text style={statisticsStyles.headerText}>Games by Main Genre</Text>
                 <GenrePieChart />
               </View>

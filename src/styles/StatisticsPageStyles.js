@@ -20,5 +20,8 @@ export const statisticsStyles = StyleSheet.create({
   },
   infoText: {
     color: "#77dd77"
+  },
+  pieView: {
+    alignItems: "center"
   }
 });

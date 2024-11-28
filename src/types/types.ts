@@ -114,7 +114,7 @@ export type GameContextType = {
     firebaseGamesWithKeys: CollectionGame[],
 }
 
-export type GameProviderType = {
+export type GameProviderProps = {
     children: ReactNode
 }
 

@@ -30,11 +30,12 @@ export const searchPageStyles = StyleSheet.create({
     justifyContent: "center"
   },
   paginationButton: {
-    width: 40
+    width: 40,
+    height: "100%"
   },
   inputView: {
     marginBottom: 15,
-    marginTop: 15,
+    marginTop: 10,
     gap: 10,
   },
   paginationView: {

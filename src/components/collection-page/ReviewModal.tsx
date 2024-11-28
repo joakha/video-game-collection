@@ -20,7 +20,7 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
         setReviewScore(game.reviewScore);
         setVisible(false)
     };
-    
+
     const saveReview = () => {
         update(ref(database, `myGames/${game.firebaseId}`), { review: review, reviewScore: reviewScore });
         setVisible(false);
@@ -29,7 +29,11 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
 
     return (
         <>
-            <Button onPress={() => setVisible(true)}>Review</Button>
+            <Button
+                onPress={() => setVisible(true)}
+                textColor='green'
+            >Review
+            </Button>
 
             <Portal>
                 <Modal
@@ -39,7 +43,7 @@ const ReviewModal = ({ game }: ReviewModalProps) => {
                     contentContainerStyle={reviewModalStyles.contentContainer}
                 >
                     <View style={reviewModalStyles.contentBody}>
-                        
+
                         <View style={reviewModalStyles.textInput}>
                             <Text style={reviewModalStyles.headerText}>Your Review for {game.name}</Text>
                             <TextInput

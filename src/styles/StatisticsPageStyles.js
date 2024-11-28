@@ -2,10 +2,13 @@ import { StyleSheet } from "react-native";
 
 //styles for statistics page
 export const statisticsStyles = StyleSheet.create({
-  contentBody: {
-    flex: 1,
+  scrollView: {
+    backgroundColor: 'gray',
+  },
+  body: {
     alignItems: 'center',
-    backgroundColor: 'gray'
+    marginBottom: 20,
+    flex: 1,
   },
   headerText: {
     fontWeight: "bold",
@@ -15,5 +18,7 @@ export const statisticsStyles = StyleSheet.create({
     marginBottom: 30,
     color: "white"
   },
-  });
-  
+  infoText: {
+    color: "#77dd77"
+  }
+});

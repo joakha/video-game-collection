@@ -1,13 +1,13 @@
 import { View, FlatList, ActivityIndicator } from 'react-native';
-import { collectionPageStyles, collectionFilterPickerStyles, collectionSortPickerStyles } from '../../styles/CollectionPageStyles';
-import CollectionCard from './CollectionCard';
+import { collectionPageStyles, collectionFilterPickerStyles, collectionSortPickerStyles } from '../styles/CollectionPageStyles';
+import CollectionCard from '../components//collection-page/CollectionCard';
 import { useState, useEffect } from 'react';
-import { CollectionGame, CollectionPageProps, FilterOptions } from '../../types/types';
+import { CollectionGame, CollectionPageProps, FilterOptions } from '../types/types';
 import { Picker } from '@react-native-picker/picker';
-import { ListEmptyComponent } from '../../constants/constants';
+import { ListEmptyComponent } from '../constants/constants';
 import { Portal, Searchbar } from 'react-native-paper';
-import useGame from '../../hooks/useGame';
-import { searchbarStyles } from '../../styles/SharedStyles';
+import useGame from '../hooks/useGame';
+import { searchbarStyles } from '../styles/SharedStyles';
 
 const CollectionPage = ({ navigation }: CollectionPageProps) => {
 

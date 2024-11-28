@@ -28,6 +28,7 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
         });
 
         if (!pickerResult.canceled) {
+            console.log(pickerResult.assets[0].uri)
             setCoverArt(pickerResult.assets[0].uri);
         }
     };
@@ -60,7 +61,11 @@ const ArtworkModal = ({ game }: ArtworkModalProps) => {
 
     return (
         <>
-            <Button onPress={open}>Artwork</Button>
+            <Button
+                onPress={open}
+                textColor='green'
+            >Artwork
+            </Button>
 
             <Portal>
                 <Modal

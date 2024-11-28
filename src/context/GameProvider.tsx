@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { ref, onValue } from 'firebase/database';
 import { FirebaseGame, CollectionGame } from "../types/types";
 import { database } from "../firebase/firebaseConfig";
-import { GameContextType, GameProviderType } from "../types/types";
+import { GameContextType, GameProviderProps } from "../types/types";
 
 const initialGameContext: GameContextType = {
   loadingGames: false,
@@ -11,7 +11,7 @@ const initialGameContext: GameContextType = {
 
 export const GameContext = createContext<GameContextType>(initialGameContext);
 
-const GameProvider = ({ children }: GameProviderType) => {
+const GameProvider = ({ children }: GameProviderProps) => {
 
   const [loadingGames, setLoadingGames] = useState<boolean>(false);
   const [firebaseGamesWithKeys, setFirebaseGamesWithKeys] = useState<CollectionGame[]>([]);

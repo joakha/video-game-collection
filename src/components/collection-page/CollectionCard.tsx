@@ -99,6 +99,8 @@ const CollectionCard = ({ game, navigation }: CollectionCardProps) => {
                 <ReviewModal game={game} />
                 <IconButton
                     icon="trash-can"
+                    containerColor='whitesmoke'
+                    iconColor='#77dd77'
                     onPress={removeGame}
                 />
             </Card.Actions>

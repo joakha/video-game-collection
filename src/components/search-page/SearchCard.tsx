@@ -40,7 +40,14 @@ const SearchCard = ({ game, navigation }: SearchCardProps) => {
                             <IconButton icon="check" iconColor='green' />
                         </>
                     ) : (
-                        <Button onPress={addToCollection}>Add</Button>
+                        <Button
+                            textColor="white"
+                            buttonColor="#77dd77"
+                            mode='contained'
+                            onPress={addToCollection}
+                        >
+                            Add
+                        </Button>
                     )
                 }
             </Card.Actions>

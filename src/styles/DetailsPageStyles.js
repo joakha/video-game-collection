@@ -9,6 +9,7 @@ export const detailsPageStyles = StyleSheet.create({
     detailsView: {
       alignItems: "center",
       marginTop: 30,
+      marginBottom: 30
     },
     image: {
       width: 350,

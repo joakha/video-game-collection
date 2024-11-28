@@ -1,9 +1,9 @@
 import { View, Text, Image, ScrollView, ActivityIndicator } from "react-native"
-import { detailsPageStyles } from "../../styles/DetailsPageStyles";
+import { detailsPageStyles } from "../styles/DetailsPageStyles";
 import { useState, useEffect } from "react";
-import { placeholderImage } from "../../constants/constants";
-import { GameDetails, DetailsPageProps } from "../../types/types";
-import { fetchGameDetails } from "../../api/apiCalls";
+import { placeholderImage } from "../constants/constants";
+import { GameDetails, DetailsPageProps } from "../types/types";
+import { fetchGameDetails } from "../api/apiCalls";
 
 const DetailsPage = ({ route }: DetailsPageProps) => {
 

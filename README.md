@@ -52,22 +52,28 @@ An application with which the user can find games and track their own collection
   - https://gifted-charts.web.app/
   - Provides many components for visualising data. Used in this app to display collection statistics.
  
-  ## Application Screenshots:
+ ## Application Screenshots:
 
   - Searching games:
+    
     ![image](https://github.com/user-attachments/assets/960f325a-823e-4548-bdd3-310c39a27011)
 
   - Game Details:
+    
     ![image](https://github.com/user-attachments/assets/ba3bab1b-a92a-43c6-8fac-ad61ada7ff3f)
 
   - Game Collection:
+    
     ![image](https://github.com/user-attachments/assets/ac10fac7-bb63-4aee-9167-3d7b05edebf4)
 
   - Giving a game a review:
+    
     ![image](https://github.com/user-attachments/assets/56085d17-0f58-4180-bf8a-541dc5d2071e)
 
   - Setting custom cover art:
+    
     ![image](https://github.com/user-attachments/assets/8071c2de-966a-449f-89e4-f137b4cf4d9c)
 
   - Collection Statistics:
+    
     ![image](https://github.com/user-attachments/assets/69bfbda0-3d86-4737-b148-6c578a49326e)
